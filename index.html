@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1600">
+<!-- Fix #3: 添加 CSP 头，兜底防 XSS -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://rrc.58cdn.com.cn; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'">
+<title>HBG DataHub · 智能数据平台 | 连接数据平台，遍览 HBG 业务</title>
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@6.0.0/dist/echarts.min.js"></script>
+</head>
+<body id="top">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="#top" class="brand"><svg class="logo" width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><path d="M15 2.5 26 8.5v13L15 27.5 4 21.5v-13z" fill="#2563eb"/><path d="M15 15V8M15 15v7M15 15H8M15 15h7" stroke="#fff" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/><circle cx="15" cy="15" r="3" fill="#fff"/><circle cx="15" cy="8" r="1.5" fill="#fff"/><circle cx="15" cy="22" r="1.5" fill="#fff"/><circle cx="8" cy="15" r="1.5" fill="#fff"/><circle cx="22" cy="15" r="1.5" fill="#fff"/></svg><span>HBG DataHub</span><i class="divider"></i><span class="badge">内测中</span></a>
+    <div class="nav-tabs">
+      <button class="tab active" data-tab="home">首页</button>
+      <button class="tab" data-tab="skills">Skills</button>
+      <button class="tab" data-tab="faq">常见问题</button>
+      <button class="tab" data-tab="changelog">更新日志</button>
+    </div>
+    <button class="nav-cta" data-goto="skills">安装 Skills</button>
+  </div>
+</header>
+
+<div class="view" id="view-home">
+
+<!-- Hero -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="tag"><i></i>AI DATA PLATFORM × HBG 全景数据</div>
+      <h1 class="h1"><span class="line">连接数据平台</span><span class="line l2">遍览<em>HBG</em>业务</span></h1>
+      <p class="sub">面向 HBG 的一体化智能数据平台<br><span class="pivot">智能看板</span> / <span class="pivot">MDC</span> / <span class="pivot">MAX</span> / <span class="pivot">星火</span>多源整合，自然语言直接查询业务数据<br>自动产出分析/HTML 报告并可直达美事</p>
+      <div class="cta-row">
+        <a href="#map" class="btn btn-primary">看看它能查什么</a>
+        <a class="link-arrow" href="#workflow">一条链路 →</a>
+      </div>
+      <div class="trust">
+        <span class="it">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a5 5 0 0 0-5 5v4H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 9V7a3 3 0 0 1 6 0v4H9z"/></svg>
+          内网 SSO 安全登录
+        </span>
+        <span class="it">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          行级数据权限隔离
+        </span>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>6<span class="k">+</span></b><span>数据源模块</span></div>
+        <div class="stat"><b>40<span class="k">+</span></b><span>指标专题</span></div>
+        <div class="stat"><b>1<span class="k">句话</span></b><span>产出完整链路</span></div>
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-bar">
+        <span class="dot" style="background:#ff5f57"></span>
+        <span class="dot" style="background:#febc2e"></span>
+        <span class="dot" style="background:#28c840"></span>
+        <span class="t">HBG DataHub</span>
+        <div class="src-sw" id="sw">
+          <button class="src active" data-k="ask">问数查询</button>
+          <button class="src" data-k="forecast">数据预测</button>
+          <button class="src" data-k="online">发布报告</button>
+          <button class="src" data-k="cron">定时任务</button>
+          <button class="src" data-k="cmp">定制报告</button>
+          <button class="src" data-k="max">明细下载</button>
+          <button class="src" data-k="xa">交叉分析</button>
+        </div>
+      </div>
+      <div class="term-body" id="tA"></div>
+    </div>
+  </div>
+  <a href="#start" class="scroll-hint" aria-label="向下滚动查看内容">
+    <span class="sh-v1">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 8l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    <span class="sh-v2">
+      <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 8l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    <span class="sh-v3">
+      <svg viewBox="0 0 24 24" width="12" height="12"><path d="M6 8l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </a>
+</section>
+
+<!-- Direct Ask · 三步开问 -->
+<section class="alt" id="start" style="padding-top:50px">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-bottom:34px">
+      <div class="eyebrow">STEP BY STEP</div>
+      <h2 class="sec-h2">不用理解技术差异，直接开问</h2>
+      <p class="sec-sub">三分钟，把数据能力装进你的工作流。</p>
+    </div>
+    <div class="ask-grid">
+      <div class="reveal ask-card"><div class="n">1</div><h3>美事一键授权</h3><p>数据权限自动获取，只需配合点击一次美事登录授权即可开问。</p></div>
+      <div class="reveal ask-card"><div class="n">2</div><h3>说出你的问题</h3><p>直接告诉它要什么数据、什么维度、如何对比。</p></div>
+      <div class="reveal ask-card"><div class="n">3</div><h3>拿数据与报告</h3><p>拿到结论、excel 与可视化报告，随时在线化分享。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Data Map -->
+<section id="map" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">One Entry · One Ask</div>
+      <h2 class="sec-h2">一个入口，六个数据源</h2>
+      <p class="sec-sub">无论数据来自哪套系统，都用同一种方式提问。HBG DataHub 帮你路由到正确的数据源并返回结构化结果。</p>
+    </div>
+
+    <div class="map-grid">
+      <div class="mcard reveal" data-skill="direct">
+        <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2Z"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2Z"/><path d="M10 6h4v4h-4zM10 12h4v4h-4zM10 18h4v2h-4z" fill="#fff"/></svg></span><span class="badge live">已上线</span></div>
+        <div class="mc-title">直销</div>
+        <div class="mc-en">hbg-direct</div>
+        <div class="mc-desc">基于智能看板底层数据，345 指标/13 业务专题自然语言查询，覆盖二租商业务，支持组织架构多层级下钻，从城市一路拆到销售。</div>
+        <div class="tag-row">
+          <span class="tag-chip">业绩收入</span><span class="tag-chip">会员新续</span><span class="tag-chip">资源大盘</span><span class="tag-chip">流量线索</span><span class="tag-chip">竞争格局</span>
+        </div>
+        <div class="mc-ft">查看能力 →</div>
+      </div>
+
+      <div class="mcard reveal" data-skill="company">
+        <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M5 21V7l8-4v18Z"/><path d="M19 21V11l-6-4v14Z"/><path d="M3 21h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="badge live">已上线</span></div>
+        <div class="mc-title">公司</div>
+        <div class="mc-en">hbg-company</div>
+        <div class="mc-desc">全量经纪公司数据，110 公司级指标，覆盖业绩/会员/连接/资源/套餐/增值等 12 类专题，支持跨公司横向对比与榜单，可与直销联动分析，为客户定制分析报告。</div>
+        <div class="tag-row">
+          <span class="tag-chip">公司业绩</span><span class="tag-chip">新签拉回</span><span class="tag-chip">市场渗透</span><span class="tag-chip">现金流</span><span class="tag-chip">房源生态</span>
+        </div>
+        <div class="mc-ft">查看能力 →</div>
+      </div>
+
+      <div class="mcard reveal" data-skill="channel">
+        <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M6 3v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18 9a9 9 0 0 1-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="badge dev">开发中</span></div>
+        <div class="mc-title">渠道</div>
+        <div class="mc-en">hbg-channel</div>
+        <div class="mc-desc">沿用直销组织架构（渠道-大区-高经-渠经-主城-城市），可一路拆分；面向渠道业务的数据接入与统一查询，补齐直销/公司后的「渠道侧」视图，开发中。</div>
+        <div class="tag-row"><span class="tag-chip">渠道业绩</span><span class="tag-chip">渠道拓展</span><span class="tag-chip">资源开发</span><span class="tag-chip">团队管理</span><span class="tag-chip">客户跟进</span></div>
+        <div class="mc-ft">规划中，即将上线 →</div>
+      </div>
+
+      <div class="mcard reveal" data-skill="mdc">
+        <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect width="7" height="7" x="3" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="14" rx="1.5"/><rect width="7" height="7" x="3" y="14" rx="1.5"/></svg></span><span class="badge inner">内部平台</span></div>
+        <div class="mc-title">MDC</div>
+        <div class="mc-en">hbg-mdc</div>
+        <div class="mc-desc">覆盖 180+ API（直销/渠道/代理/经纪/爱房/巧房/HBG），自然语言查询业绩、端口、续费、透支、商圈等 MDC 看板，与 HBG 数据源同一链路。</div>
+        <div class="tag-row"><span class="tag-chip">业绩分析</span><span class="tag-chip">端口效果</span><span class="tag-chip">续费预警</span><span class="tag-chip">商圈排名</span><span class="tag-chip">任务管理</span></div>
+        <div class="mc-ft">查看能力 →</div>
+      </div>
+
+      <div class="mcard reveal" data-skill="max">
+        <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="m9 15 3 3 3-3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="badge inner">内部平台</span></div>
+        <div class="mc-title">MAX</div>
+        <div class="mc-en">hbg-max</div>
+        <div class="mc-desc">MAX 明细报表查询与导出：按报表/日期/筛选器灵活查询，异步导出大文件，沉淀到工作区供分析复用。</div>
+        <div class="tag-row"><span class="tag-chip">明细查询</span><span class="tag-chip">异步导出</span><span class="tag-chip">Excel 留底</span><span class="tag-chip">工作区沉淀</span><span class="tag-chip">二次分析</span></div>
+        <div class="mc-ft">查看能力 →</div>
+      </div>
+
+      <div class="mcard reveal" data-skill="xinghuo">
+        <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span><span class="badge live">已上线</span></div>
+        <div class="mc-title">星火</div>
+        <div class="mc-en">hbg-xinghuo</div>
+        <div class="mc-desc">直连星火平台，按报表/日期/筛选器查询有权限的报表数据，支持自然语言取数、下载原始数据并归并到工作区供二次分析与可视化。</div>
+        <div class="tag-row"><span class="tag-chip">报表查询</span><span class="tag-chip">数据下载</span><span class="tag-chip">权限内分析</span><span class="tag-chip">趋势对比</span><span class="tag-chip">月度追踪</span></div>
+        <div class="mc-ft">查看能力 →</div>
+      </div>
+    </div>
+    <div class="map-note reveal">— 更多数据源接入中 · 让 <b>HBG</b> 每一份数据都能被一句自然语言触达 —</div>
+  </div>
+</section>
+
+<!-- Capability -->
+<section id="capability">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Capabilities</div>
+      <h2 class="sec-h2">从查数，到办成事</h2>
+      <p class="sec-sub">语义取数只是起点。HBG DataHub 把「分析、可视化、分享、触达」串成一条不打断的链路。</p>
+    </div>
+
+    <div class="cap-grid">
+      <div class="ccard reveal"><div class="i"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h4>自然语言语义取数</h4><p>用大白话提问，自动解析意图、匹配业务口径、生成并执行 DSL。</p></div>
+      <div class="ccard reveal"><div class="i"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h4>多层级下钻</h4><p>全国→大区→城市→团队→部门→销售；公司版则下钻到单家公司。</p></div>
+      <div class="ccard reveal"><div class="i"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2"/></svg></div><h4>专业指标口径</h4><p>内置业务黑话与口径差异，避免"子类9"、"收现 vs GAAP"等误用。</p></div>
+      <div class="ccard reveal"><div class="i"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 7l-8.5 8.5-5-5L2 17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 7h6v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h4>自动归因分析</h4><p>趋势/结构拆解/维度下钻/漏斗，把问题定位到可执行的群体。</p></div>
+      <div class="ccard reveal"><div class="i"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20v-8M18 20V4M6 20v-4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></div><h4>HTML 可视化报告</h4><p>现场用 ECharts 生成图文报告，一键在线化为可分享内网链接。</p></div>
+      <div class="ccard reveal"><div class="i"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8M16 13H8M16 17H8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div><h4>Excel 留底</h4><p>每次查询沉淀原始数据，可复核、可复用、可追溯。</p></div>
+      <div class="ccard reveal"><div class="i"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h4>在线化分享</h4><p>一条命令把报告发布出去，链接直接发给同事或群。</p></div>
+      <div class="ccard reveal"><div class="i"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h4>美事直达</h4><p>分析结论、报告链接一键发送到美事，让数据真正抵达决策现场。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Interactive Demo -->
+<section id="interact" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Interactive Demo</div>
+      <h2 class="sec-h2">自然语言进去，事情办完出来。</h2>
+      <p class="sec-sub">选一个场景，看 Agent 如何听懂人话、自动完成取数与分析，并把结论派发到位。</p>
+    </div>
+    <div class="idemo reveal">
+      <div class="idemo-nav" id="idemoNav"></div>
+      <div class="term">
+        <div class="term-bar">
+          <span class="dot" style="background:#ff5f57"></span>
+          <span class="dot" style="background:#febc2e"></span>
+          <span class="dot" style="background:#28c840"></span>
+          <span class="t">HBG DataHub</span>
+        </div>
+        <div class="term-body" id="idemoBody"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Workflow / before-after -->
+<section id="workflow" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Pipeline</div>
+      <h2 class="sec-h2">复杂分析，一气呵成</h2>
+      <p class="sec-sub">把过去动辄数小时的多系统来回，压缩成一句自然语言和一条完整链路。</p>
+    </div>
+
+    <div class="ba reveal">
+      <div class="ba-card dim">
+        <h4>以前 · 一次分析，多次切换</h4>
+        <ul>
+          <li>登录多个平台，导出多份 excel</li>
+          <li>手动画表、拼口径、对指标</li>
+          <li>复制粘贴做 PPT / 截图</li>
+          <li>找渠道发文件给同事</li>
+        </ul>
+      </div>
+      <div class="ba-go">→</div>
+      <div class="ba-card go">
+        <h4>现在 · 一句话，自动完成</h4>
+        <ul>
+          <li>理解自然语言意图并路由数据源</li>
+          <li>语义取数 + 专业口径计算</li>
+          <li>归因分析 + HTML 可视化报告</li>
+          <li>在线化发布 + 美事直达</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pipe" style="margin-top:52px">
+      <div class="pstep reveal"><div class="n">01</div><h4>说一句</h4><p>用自然语言描述你想看的业务问题。</p><span class="ar">→</span></div>
+      <div class="pstep reveal"><div class="n">02</div><h4>语义取数</h4><p>意图解析 + 指标匹配 + DSL 执行。</p><span class="ar">→</span></div>
+      <div class="pstep reveal"><div class="n">03</div><h4>归因分析</h4><p>趋势、结构、下钻、漏斗，产出结论。</p><span class="ar">→</span></div>
+      <div class="pstep reveal"><div class="n">04</div><h4>HTML 报告</h4><p>现场生成可视化报告与 excel 留底。</p><span class="ar">→</span></div>
+      <div class="pstep reveal"><div class="n">05</div><h4>在线化</h4><p>发布为可分享的内网链接。</p><span class="ar">→</span></div>
+      <div class="pstep reveal"><div class="n">06</div><h4>美事直达</h4><p>结论与链接一键发到群和同事。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Access -->
+<section id="access">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Three Steps</div>
+      <h2 class="sec-h2">三步，把数据交给自己</h2>
+      <p class="sec-sub">不是配系统，而是配一个随时可问的「数据助手」。</p>
+    </div>
+
+    <div class="acc">
+      <div class="acard reveal">
+        <div class="no">STEP 1</div>
+        <h4>美事一键授权</h4>
+        <p>数据权限自动获取，只需配合点击一次美事登录授权，即可在权限范围内开始查询。</p>
+        <div class="code"># meishi 授权 → 权限自动就绪</div>
+      </div>
+      <div class="acard reveal">
+        <div class="no">STEP 2</div>
+        <h4>说出你的问题</h4>
+        <p>把需求用一句大白话告诉我：要什么数据、什么维度、怎么对比。</p>
+        <div class="code">"查华东大区本月续费率"</div>
+      </div>
+      <div class="acard reveal">
+        <div class="no">STEP 3</div>
+        <h4>拿数据与报告</h4>
+        <p>拿到结构化结论、excel 与 HTML 报告，需要时在线化并发给团队。</p>
+        <div class="code">→ report link · 美事</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Boundary -->
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Trust &amp; Boundary</div>
+      <h2 class="sec-h2">清晰、可控、可审计</h2>
+    </div>
+    <div class="bound">
+      <div class="bcard reveal"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/><path d="m16 11 2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 使用你的身份</h4><p>所有查询都代表当前登录用户，只能读到权限范围内的数据，重要操作依据明确意图执行。</p></div>
+      <div class="bcard reveal"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg> 权限白名单</h4><p>查询自动路由到账号有权访问的数据集，越权字段与维度在入口拦截。</p></div>
+      <div class="bcard reveal"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 结果可检查</h4><p>每一步返回结构化结果，数据落盘可复核、口径可追溯，不替你拍板。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Provenance · 出品方 -->
+<section id="provenance">
+  <div class="wrap">
+    <div class="sec-head reveal" style="max-width:none;text-align:center;margin-left:auto;margin-right:auto">
+      <div class="eyebrow">PROVENANCE</div>
+      <h2 class="sec-h2">HBG 数据应用部出品</h2>
+      <p class="sec-sub" style="margin-left:auto;margin-right:auto">面向 58 同城内部业务团队，把分散在各个系统里的数据收敛成一个入口。</p>
+    </div>
+    <div class="uses reveal">
+      <div class="logos">
+        <span>智能看板</span>
+        <span>MDC</span>
+        <span>MAX</span>
+        <span>星火</span>
+      </div>
+      <div class="lbl">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s-7-5.6-7-11a7 7 0 1114 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="3" fill="#fff"/></svg>
+        仅限 58 内部账号使用 · 需 Passport 登录
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Closing -->
+<section class="closing reveal">
+  <div class="wrap">
+    <div class="eyebrow">HBG DATAHUB</div>
+    <h2>让数据查询，<br>回到业务问题本身。</h2>
+    <p>下一次需要看 HBG 数据时，不用先想它藏在哪套系统里——直接说出你要什么。</p>
+    <div class="btns">
+      <button class="btn btn-primary" data-goto="skills">安装 Skills</button>
+      <button class="btn btn-ghost" data-goto="faq">先看常见问题</button>
+    </div>
+  </div>
+</section>
+</div><!-- /view-home -->
+
+<!-- ===================== SKILLS VIEW ===================== -->
+<div class="view" id="view-skills" style="display:none">
+
+  <!-- QUICK INSTALL -->
+  <section id="install" style="background:var(--alt)">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="eyebrow">QUICK INSTALL</div>
+        <h2 class="sec-h2">一个安装器，按需选择范围</h2>
+        <p class="sec-sub">安装器会自动识别当前 Agent 的 Skills 目录，并安装所有选中的 Skills。</p>
+      </div>
+
+      <div class="bsk-shell reveal">
+        <div class="bsk-tabs">
+          <button class="bsk-tab active" data-m="all">安装全部</button>
+          <button class="bsk-tab" data-m="select">按需安装</button>
+        </div>
+        <div class="bsk-body">
+          <div>
+            <h3 id="bskTitle"></h3>
+            <p class="bsk-expl" id="bskSub"></p>
+          </div>
+          <div class="bsk-code">
+            <div class="bsk-code-h"><span class="lang">bash</span><button class="cpy" id="bskCopy">⧉ 复制</button></div>
+            <pre id="bskCmd"></pre>
+          </div>
+        </div>
+        <div class="bsk-optl">
+          <div class="bsk-feat" id="bskFeat"></div>
+          <div class="bsk-opts" id="bskOpts" style="display:none"></div>
+        </div>
+        <div class="bsk-paths">
+          <div class="bsk-path"><strong>WorkBuddy <span class="badge live">已适配</span></strong><code>~/.workbuddy/skills/</code></div>
+          <div class="bsk-path"><strong>Claude Code <span class="badge dev">待适配</span></strong><code>~/.claude/skills/</code></div>
+          <div class="bsk-path"><strong>Codex <span class="badge dev">待适配</span></strong><code>~/.codex/skills/</code></div>
+          <div class="bsk-path"><strong>OpenClaw <span class="badge dev">待适配</span></strong><code>~/.openclaw/skills/</code></div>
+          <div class="bsk-path"><strong>Hermes <span class="badge dev">待适配</span></strong><code>~/.hermes/skills/</code></div>
+        </div>
+        <div class="bsk-next">
+          <span>下一步：美事一键授权，解锁权限后即可在范围内开问。</span>
+          <button id="bskNext">查看 Skill 名称 →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILL CATALOG -->
+  <section id="catalog" class="alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="eyebrow">SKILL CATALOG · 按需安装专业顾问</div>
+        <h2 class="sec-h2">6 个数据能力，点击了解详情</h2>
+        <p class="cat-note">每一个数据入口都对应一个可独立安装的 Skills。点击卡片查看用途、安装命令、核心能力与示例问题；无需的全部不装，各取所需。</p>
+      </div>
+      <div class="map-grid" id="catalogGrid">
+
+        <div class="mcard reveal" data-skill="direct">
+          <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2Z"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2Z"/><path d="M10 6h4v4h-4zM10 12h4v4h-4zM10 18h4v2h-4z" fill="#fff"/></svg></span><span class="badge live">已上线</span></div>
+          <div class="mc-title">直销</div>
+          <div class="mc-en">hbg-direct</div>
+          <div class="mc-desc">基于智能看板底层数据，345 指标/13 业务专题自然语言查询，覆盖二租商业务，支持组织架构多层级下钻，从城市一路拆到销售。</div>
+          <div class="tag-row"><span class="tag-chip">业绩收入</span><span class="tag-chip">会员新续</span><span class="tag-chip">资源大盘</span><span class="tag-chip">流量线索</span><span class="tag-chip">竞争格局</span></div>
+          <div class="mc-ft">查看能力 →</div>
+        </div>
+
+        <div class="mcard reveal" data-skill="company">
+          <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M5 21V7l8-4v18Z"/><path d="M19 21V11l-6-4v14Z"/><path d="M3 21h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="badge live">已上线</span></div>
+          <div class="mc-title">公司</div>
+          <div class="mc-en">hbg-company</div>
+          <div class="mc-desc">全量经纪公司数据，110 公司级指标，覆盖业绩/会员/连接/资源/套餐/增值等 12 类专题，支持跨公司横向对比与榜单，可与直销联动分析，为客户定制分析报告。</div>
+          <div class="tag-row"><span class="tag-chip">公司业绩</span><span class="tag-chip">新签拉回</span><span class="tag-chip">市场渗透</span><span class="tag-chip">现金流</span><span class="tag-chip">房源生态</span></div>
+          <div class="mc-ft">查看能力 →</div>
+        </div>
+
+        <div class="mcard reveal" data-skill="channel">
+          <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M6 3v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18 9a9 9 0 0 1-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="badge dev">开发中</span></div>
+          <div class="mc-title">渠道</div>
+          <div class="mc-en">hbg-channel</div>
+          <div class="mc-desc">沿用直销组织架构（渠道-大区-高经-渠经-主城-城市），可一路拆分；面向渠道业务的数据接入与统一查询，补齐直销/公司后的「渠道侧」视图，开发中。</div>
+          <div class="tag-row"><span class="tag-chip">渠道业绩</span><span class="tag-chip">渠道拓展</span><span class="tag-chip">资源开发</span><span class="tag-chip">团队管理</span><span class="tag-chip">客户跟进</span></div>
+          <div class="mc-ft">规划中，即将上线 →</div>
+        </div>
+
+        <div class="mcard reveal" data-skill="mdc">
+          <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect width="7" height="7" x="3" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="14" rx="1.5"/><rect width="7" height="7" x="3" y="14" rx="1.5"/></svg></span><span class="badge inner">内部平台</span></div>
+          <div class="mc-title">MDC</div>
+          <div class="mc-en">hbg-mdc</div>
+          <div class="mc-desc">覆盖 180+ API（直销/渠道/代理/经纪/爱房/巧房/HBG），自然语言查询业绩、端口、续费、透支、商圈等 MDC 看板，与 HBG 数据源同一链路。</div>
+          <div class="tag-row"><span class="tag-chip">业绩分析</span><span class="tag-chip">端口效果</span><span class="tag-chip">续费预警</span><span class="tag-chip">商圈排名</span><span class="tag-chip">任务管理</span></div>
+          <div class="mc-ft">查看能力 →</div>
+        </div>
+
+        <div class="mcard reveal" data-skill="max">
+          <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="m9 15 3 3 3-3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="badge inner">内部平台</span></div>
+          <div class="mc-title">MAX</div>
+          <div class="mc-en">hbg-max</div>
+          <div class="mc-desc">MAX 明细报表查询与导出：按报表/日期/筛选器灵活查询，异步导出大文件，沉淀到工作区供分析复用。</div>
+          <div class="tag-row"><span class="tag-chip">明细查询</span><span class="tag-chip">异步导出</span><span class="tag-chip">Excel 留底</span><span class="tag-chip">工作区沉淀</span><span class="tag-chip">二次分析</span></div>
+          <div class="mc-ft">查看能力 →</div>
+        </div>
+
+        <div class="mcard reveal" data-skill="xinghuo">
+          <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span><span class="badge live">已上线</span></div>
+          <div class="mc-title">星火</div>
+          <div class="mc-en">hbg-xinghuo</div>
+          <div class="mc-desc">直连星火平台，按报表/日期/筛选器查询有权限的报表数据，支持自然语言取数、下载原始数据并归并到工作区供二次分析与可视化。</div>
+          <div class="tag-row"><span class="tag-chip">报表查询</span><span class="tag-chip">数据下载</span><span class="tag-chip">权限内分析</span><span class="tag-chip">趋势对比</span><span class="tag-chip">月度追踪</span></div>
+          <div class="mc-ft">查看能力 →</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div><!-- /view-skills -->
+
+<!-- ===================== FAQ VIEW ===================== -->
+<div class="view" id="view-faq" style="display:none">
+  <section id="faq" style="background:var(--alt)">
+    <div class="wrap">
+      <div class="sec-head reveal" style="max-width:none;text-align:center;margin-left:auto;margin-right:auto">
+        <div class="eyebrow">FAQ</div>
+        <h2 class="sec-h2">常见问题</h2>
+        <p class="sec-sub" style="margin-left:auto;margin-right:auto">关于数据源、安装、权限与边界，这里先回答最常见的几个。</p>
+      </div>
+
+      <div class="faq-layout">
+      <div class="faq-nav reveal">
+        <span class="faq-nav-lab">快速定位</span>
+        <div class="faq-nav-tags" id="faqNav"></div>
+      </div>
+
+      <div class="faq-list">
+        <details class="fq reveal" open>
+          <summary>HBG DataHub 到底能查哪些数据？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">目前接入 <b>6 个数据源</b>：直销（城市级，可下钻到团队/部门/销售）、公司（全量经纪公司，公司为最细粒度）、渠道（开发中）、MDC（销售管理决策系统）、MAX（明细报表导出）、星火（权限内报表直查）。覆盖业绩、达成率、续费率、会员新续、资源、流量线索、竞争格局等 40+ 指标专题。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>怎么安装？支持哪些 Agent？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">在 <b>Skills</b> 页用安装器复制命令即可，支持「安装全部」和「按需安装」两种模式。安装器会自动识别当前 Agent 的 Skills 目录——目前 <b>WorkBuddy</b> 已适配，<b>Claude Code</b>、<b>Codex</b>、<b>OpenClaw</b>、<b>Hermes</b> 处于待适配状态；均做 SHA-256 完整性校验。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>数据安全与权限怎么保障？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">所有查询都<b>代表当前登录用户</b>，通过内网 SSO 鉴权，只能读到权限范围内的数据，且做到<b>行级权限隔离</b>。越权字段与维度在入口就被拦截。公司版另有「城市全量 / 填报」双数据集权限模型，由初始化时自动探测路由。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>它会替我做决策吗？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">不会。HBG DataHub 负责<b>把数据取准、口径对齐、归因定位</b>，结论与建议给你参考，但不替你拍板。每一步的中间结果都会落盘（excel 留底 + HTML 报告），可复核、可追溯。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>查不到数据 / 取数报错怎么办？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">按顺序排查：① 重试一次；② 核对当前账号在该平台的数据层级权限（很多「没数据」其实是权限范围问题）；③ 仍不行请联系 <b>HBG 数据应用部 · liwenrui</b> 反馈。注意：取数失败时不要自行改写取数脚本绕过。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>取数时报 HTTP 302 / 连不上数据接口？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">一般是当前网络<b>不在公司内网</b>，数据接口要求内网环境。在「神奇管家」搜索安装 <b>EasyConnect</b>，连接公司 VPN 后再重新发起查询即可。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>登录授权反复失败（一直提示要登录）？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">授权依赖浏览器里已有的 <b>OA 登录态</b>。把系统默认浏览器设为 <b>Chrome 或 Edge</b>，先在浏览器里登录一次<b>任意公司内部系统</b>，拿到 OA Cookie 后再执行登录即可成功。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>城市 / 部门名称怎么没识别对？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">尽量用<b>完整、规范的叫法</b>，比如「上海二手房二区」比「上海二区」更准，最好带上城市前缀。仍然不对就<b>换个说法再问一次</b>。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>提示没有权限看某个数据？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">说明该层级的数据不在你账号的<b>权限范围</b>内。联系负责人申请对应权限即可；权限开通后，技能会自动刷新缓存并重试一次。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>查到空数据 / 显示「未更新」？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">底层看板数据一般<b>每天 9 点后</b>才会更新。9 点之前查询可能拿到空数据或提示未更新，<b>9 点之后再查一次</b>即可。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>报告 / 在线链接打不开？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">链接需要<b>用公司账号登录（58 passport）</b>后才能查看。请先确认已在浏览器登录公司账号，再点开链接。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>能不能只发 Excel、不带分析文字？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">可以。直接说「<b>只要 excel，然后发给 XX</b>」，技能就只取数、不附带分析文字。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>发到美事怎么没发出去？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">美事发送<b>不支持发给自己</b>，必须指定明确的接收方：发同事写对方 OA 名（如「发给王鹏」），发群写群名（如「发到数据群」）。只说「发给我」会失败，改成指定一个同事或群组即可。</div>
+        </details>
+
+        <details class="fq reveal">
+          <summary>取数失败时，为什么不能让我直接改脚本重试？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <div class="ans">取数走的是<b>验证过的固定路径</b>，自行改写脚本或「换个方式绕过」很容易引入新问题（AI 的归因可能是幻觉）。遇到失败请按上面的排查步骤处理，或直接联系负责人，<b>不要自行修改取数逻辑</b>。</div>
+        </details>
+      </div>
+      </div><!-- /faq-layout -->
+
+      <div class="reveal" style="text-align:center;margin-top:34px">
+        <button class="btn btn-primary" data-goto="skills">去看安装方式</button>
+      </div>
+    </div>
+  </section>
+</div><!-- /view-faq -->
+
+<!-- ===================== CHANGELOG VIEW ===================== -->
+<div class="view" id="view-changelog" style="display:none">
+  <section style="padding:78px 0 96px">
+    <div class="wrap">
+      <div class="sec-head reveal" style="max-width:none;text-align:center;margin-left:auto;margin-right:auto">
+        <div class="eyebrow">CHANGELOG</div>
+        <h2 class="sec-h2">更新日志</h2>
+        <p class="sec-sub" style="margin-left:auto;margin-right:auto">HBG DataHub 的每一次迭代，都是为了让查数更贴近业务，更快，更稳</p>
+      </div>
+
+      <div class="cl-list">
+
+        <div class="cl-item reveal">
+          <div class="cl-meta">
+            <span class="cl-date">2026-09-01</span>
+            <span class="cl-ver">hbg-direct / hbg-company</span>
+          </div>
+          <div class="cl-body">
+            <div class="cl-prod">查询更稳，权限更即时</div>
+            <ul>
+              <li>权限升级后立刻就能查：以前账号刚扩展权限，第一次查还按旧范围误报「未找到」，现在会自动按新权限重新查询。</li>
+              <li>公司同名不干扰：查「到家了」自动优先命中完整全称，无关的撞名简称不再让你反复二选一。</li>
+              <li>偶发故障自动重试：只读查询带防重复标识，真正的失败才重试、最多一次且硬上限不死循环；能清楚区分「没权限」还是「临时抽风」。</li>
+              <li>查询工具每次初始化自动更新到最新版，不用手动升级；更新失败也保留旧版继续用，不卡流程。</li>
+              <li>依赖自动补齐：软件升级把环境重置后，取数前会自动装回所需组件，不再莫名失败。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cl-item reveal">
+          <div class="cl-meta">
+            <span class="cl-date">2026-08-31</span>
+            <span class="cl-ver">hbg-direct / hbg-company</span>
+          </div>
+          <div class="cl-body">
+            <div class="cl-prod">权限范围更贴切，匹配更智能</div>
+            <ul>
+              <li>带城市前缀的公司名一次识别：查「上海我爱我家」不再被误当成城市，直接命中。</li>
+              <li>只有「填报权限」也能查了：没有全量权限也能查自己填报的公司；无全量权限时自动降级到你有权限的数据。</li>
+              <li>全历史大查询一次可取到 10 万行，数据更完整；大表格与全流程会预留最长 10 分钟超时，不再因「慢」被中途杀掉白跑。</li>
+              <li>确实没权限时当场明确提示（可引导联系赋权），不会再静默返回空或错误的数据。</li>
+              <li>指标口径统一从公司服务器分发，换设备、团队共享零配置，口径更新即自动生效。</li>
+              <li>公司唯一 ID 按文本完整读取，超长公司编号不再因精度丢失而错位、匹配不上。</li>
+              <li>在线化发布与美事发送做持久自愈防护：本地发布环境权限被工具写坏时会自动修复，发报告、发个人/发群更可靠。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cl-item reveal">
+          <div class="cl-meta">
+            <span class="cl-date">2026-08-30</span>
+            <span class="cl-ver">hbg-company · 首版</span>
+          </div>
+          <div class="cl-body">
+            <div class="cl-prod">公司版上线</div>
+            <ul>
+              <li>按公司查数据：公司为最细粒度，覆盖多城市与大区，110 个公司级指标、12 类专题、21 种时间口径（日/月/季/年）。</li>
+              <li>公司名三步匹配：精确命中 → 模糊列出候选 → 查不到时明确提示，不会悄悄笼统返回。</li>
+              <li>分析手段齐全：公司间对比、榜单、结构拆解、漏斗路径，覆盖业绩、会员、资源、流量等常见场景。</li>
+              <li>指标「会看方向」：像透支、投诉、流失、未拜访这类越低越好的指标，会自动标出问题项，不再只丢一串数字。</li>
+              <li>标注「查不了」的指标（近 7 日消耗、有效拜访门店等一批）会直接告诉你别问，省得白跑。</li>
+              <li>可与直销数据联动分析，直接产出 HTML 报告并分享。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cl-item reveal">
+          <div class="cl-meta">
+            <span class="cl-date">2026-08-29</span>
+            <span class="cl-ver">hbg-direct</span>
+          </div>
+          <div class="cl-body">
+            <div class="cl-prod">时间筛选不再串数据</div>
+            <ul>
+              <li>时间筛选机制化：说「最新 / 近 30 天 / Q2 / 去年 / 某年某月」，会按真正的数据日期筛选——查「26年」不再混入 2024 年数据，「最新」也能稳定取到。</li>
+              <li>同一时间说法支持多种表达并互相校验；表述有歧义或边界不清时，自动降级为全量口径并明确告诉你，不再悄悄按错误的时间段算。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cl-item reveal">
+          <div class="cl-meta">
+            <span class="cl-date">2026-08-28</span>
+            <span class="cl-ver">hbg-direct</span>
+          </div>
+          <div class="cl-body">
+            <div class="cl-prod">分享与中文体验更稳</div>
+            <ul>
+              <li>在线化发布 / 美事发送兼容新版底层工具，更稳定。</li>
+              <li>含中文的查询内容在接收、落盘环节不再乱码或报错中断。</li>
+              <li>发布 / 发送落盘带「退避重试 + 原子替换」：文件被占用会自动重试，写入走临时文件再一次性替换，不会发一半、留半截。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cl-item reveal">
+          <div class="cl-meta">
+            <span class="cl-date">2026-07-20</span>
+            <span class="cl-ver">hbg-direct</span>
+          </div>
+          <div class="cl-body">
+            <div class="cl-prod">口径更准，权限更即时</div>
+            <ul>
+              <li>「房产业绩」独立展示：总业绩不再和会员/增值等子类并排重复，图表口径更正确。</li>
+              <li>权限一旦扩展立即可查，不再误报「无权限 / 无数据」。</li>
+              <li>在线化分享返回可点击的完整链接，不再是一串点不了的文字。</li>
+              <li>没有权限的层级取数前直接拦截并明确提示，不再悄悄降级成全国汇总数据。</li>
+              <li>维度字段自动纠错：像「上海二手房二区」「华东区」这类下钻词会自动归到正确字段并补全完整名称（如「华东」→「华东区」），不再被误当成城市查错。</li>
+              <li>报告会按你问的主题自动匹配分析版块（业绩、会员、资源、行动量等各有专属版块），不再是千篇一律的模板。</li>
+              <li>业务口径、指标说明文档自动从内网更新；查询所需基础数据每周日统一刷新。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cl-item reveal">
+          <div class="cl-meta">
+            <span class="cl-date">2026-07-17 ~ 07-18</span>
+            <span class="cl-ver">hbg-direct</span>
+          </div>
+          <div class="cl-body">
+            <div class="cl-prod">更稳、可复现、可追溯</div>
+            <ul>
+              <li>每次生成报告会额外存一份可运行的脚本模板，想再出一张同类报告，直接拿来改就行。</li>
+              <li>查询条件与查询结果捆绑落盘，想复核某次数据「怎么查的、查了多少」，一键重新拉取。</li>
+              <li>全流程更稳：取数、出报告由一条命令走完，失败即明确报错；结果固定落到你的工作区目录，不会写丢。</li>
+              <li>取数、出报告收口成一条稳定主流程，压缩 AI 自由发挥空间，出错更少、结果更一致。</li>
+              <li>环境与规则只认一份权威配置，杜绝多套配置互相打架导致的取数失败。</li>
+              <li>报告脚本的导入、样式、数据加载等框架部分由系统预写好，AI 只负责填正文图表、不能动框架，杜绝把报告脚本写崩。</li>
+              <li>路径与环境问题彻底根治：Windows 路径不会误解析成 Unix 路径，文档路径随工具自动对齐，不用手动改。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cl-item reveal">
+          <div class="cl-meta">
+            <span class="cl-date">2026-07-19</span>
+            <span class="cl-ver">hbg-direct</span>
+          </div>
+          <div class="cl-body">
+            <div class="cl-prod">可以「只要数据」</div>
+            <ul>
+              <li>明确说「只要 excel / 只要数据 / 不用分析 / 不要报告」，就直接交付数据表、跳过报告；不说则默认生成报告。</li>
+              <li>「跳过报告」用固定关键词精确匹配、不做语义联想，避免同一句话今天跳、明天不跳。</li>
+              <li>分析脚本禁止凭空编数字：某处数据读不出来时明确停下来告诉你，而不是 AI 自己编一个凑数。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cl-item reveal">
+          <div class="cl-meta">
+            <span class="cl-date">2026-07-15 ~ 07-16</span>
+            <span class="cl-ver">hbg-direct</span>
+          </div>
+          <div class="cl-body">
+            <div class="cl-prod">报告更灵活、更好读</div>
+            <ul>
+              <li>报告 / 在线化 / 发送变成可选环节，可自由组合：既可以「纯查数直接交数据」，也可以「查数 + 报告 + 分享」完整走一遍。</li>
+              <li>每次查询都会先返回一段可直接读的中文分析：核心数据 + 归因 + 对比 + 建议，不再是数字罗列。</li>
+              <li>报告标题自动保持中文并去掉「一、二、三 / 1.」序号，排版更整洁。</li>
+              <li>报告版式更稳：排版与图表样式会被自动校验纠错，不再出现乱版、图表不渲染。</li>
+              <li>所有报告统一按同一套骨架生成，结构工整一致，不同查询出的报告放在一起更好对比。</li>
+              <li>分析文本更精炼，把结论直接摆出来，不用在长文里翻找重点。</li>
+              <li>取数遇到问题时直接明确告知并停下，不再自作主张改参数或换方式硬试，避免给出一份错的中间结果。</li>
+              <li>查数被「取数铁律」约束：必须走既定流程，禁止凭空编造或硬套参数凑数，保证结果不是 AI 瞎猜。</li>
+              <li>每次查询交付出什么有明确约定（必有数据、可选报告 / 在线化 / 发送），输出稳定可预期，不再这次给报告、下次变成一张表格。</li>
+              <li>Windows 中文环境下取数、出报告不再因编码问题崩溃。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cl-item reveal">
+          <div class="cl-meta">
+            <span class="cl-date">2026-07-14</span>
+            <span class="cl-ver">hbg-direct</span>
+          </div>
+          <div class="cl-body">
+            <div class="cl-prod">报告质量全面升级</div>
+            <ul>
+              <li>KPI 更「会说人话」：每个关键指标给比较基准和好坏判断（达标 / 待改善），含达成率、任务值、时间进度。</li>
+              <li>洞察更实用：每条结论都包含「为什么发生 + 和谁对比 + 接下来怎么做」。</li>
+              <li>支持 8 种可视化图表，环比涨跌按指标含义正确着色，支持多年份月度同比对比；下载的数据文件用易懂的中文列名。</li>
+              <li>图表库配「外部源 + 内网」双备份，一个源连不上自动切另一个，报告不会整页图表空白。</li>
+              <li>图表数据先自动规整、去掉易报错的数据形式，杜绝「格式不被接受」导致整张图失败。</li>
+              <li>当月已成进度按 100% 计算、达成率为 0 时不擅自回退到上月，口径更可靠。</li>
+              <li>单次查询最多返回 600+ 字段；支持把结果与报告通过美事直接发给个人或群。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cl-item reveal">
+          <div class="cl-meta">
+            <span class="cl-date">2026-07-13</span>
+            <span class="cl-ver">首版</span>
+          </div>
+          <div class="cl-body">
+            <div class="cl-prod">首个可用版本</div>
+            <ul>
+              <li>自然语言直接查数：一条命令自动初始化指标库并带缓存，说「上海的业绩数据」即匹配到指标准确取数。</li>
+              <li>全流程跑通：从提出业务问题 → 语义取数 → 归因分析 → 自动生成 HTML 报告。</li>
+              <li>支持多级下钻：全国 → 城市 → 大区 → 团队 → 部门 → 销售，一路拆到具体责任层级。</li>
+              <li>金额与百分比严格区分：裸指标名不再被误判成百分比，金额不会显示成 ×100% 误导读数。</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div><!-- /view-changelog -->
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><svg class="logo" width="28" height="28" viewBox="0 0 30 30" fill="none" aria-hidden="true"><path d="M15 2.5 26 8.5v13L15 27.5 4 21.5v-13z" fill="#2563eb"/><path d="M15 15V8M15 15v7M15 15H8M15 15h7" stroke="#fff" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/><circle cx="15" cy="15" r="3" fill="#fff"/><circle cx="15" cy="8" r="1.5" fill="#fff"/><circle cx="15" cy="22" r="1.5" fill="#fff"/><circle cx="8" cy="15" r="1.5" fill="#fff"/><circle cx="22" cy="15" r="1.5" fill="#fff"/></svg><span>HBG DataHub</span></div>
+        <p class="foot-intro">面向 HBG 的一体化智能数据平台。用一句自然语言，查遍六套系统的数据。</p>
+      </div>
+      <div class="foot-col">
+        <h4>数据源</h4>
+        <ul>
+          <li><a href="#/skills" data-goto="skills">直销 · hbg-direct</a></li>
+          <li><a href="#/skills" data-goto="skills">公司 · hbg-company</a></li>
+          <li><a href="#/skills" data-goto="skills">渠道 · hbg-channel</a></li>
+          <li><a href="#/skills" data-goto="skills">MDC · hbg-mdc</a></li>
+          <li><a href="#/skills" data-goto="skills">MAX · hbg-max</a></li>
+          <li><a href="#/skills" data-goto="skills">星火 · hbg-xinghuo</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>导航</h4>
+        <ul>
+          <li><a href="#/home" data-goto="home">首页</a></li>
+          <li><a href="#/skills" data-goto="skills">Skills 与安装</a></li>
+          <li><a href="#/faq" data-goto="faq">常见问题</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>联系</h4>
+        <ul>
+          <li>HBG 数据应用部</li>
+          <li>liwenrui@58.com</li>
+          <li>仅限 58 内部使用</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 58 同城 · HBG DataHub · 仅供内部使用</span>
+      <span>v1.2.3 · 内测中</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Skill modal -->
+<div class="ov" id="ov" aria-hidden="true">
+  <div class="dv" id="dv" role="dialog" aria-modal="true"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@6.0.0/dist/echarts.min.js"></script>
+<script src="js/demo-data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
