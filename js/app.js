@@ -191,11 +191,11 @@
     var feat = document.getElementById('bskFeat');
     var optsBox = document.getElementById('bskOpts');
     var next = document.getElementById('bskNext');
-    var mode = 'all';
+    var mode = 'pkg';
 
     function buildOpts() {
       optsBox.innerHTML = INSTALL_SKILLS.map(function (s) {
-        return '<label class="bsk-opt"><input type="checkbox" data-s="' + s[0] + '">' + s[1] + ' <code>' + s[2] + '</code></label>';
+        return '<label class="bsk-opt"><input type="checkbox" data-s="' + s[0] + '" checked>' + s[1] + ' <code>' + s[2] + '</code></label>';
       }).join('');
       [].slice.call(optsBox.querySelectorAll('input')).forEach(function (b) { b.addEventListener('change', updCmd); });
     }
@@ -203,27 +203,25 @@
       feat.innerHTML =
         '<span><span class="tick">✓</span> 自动识别 Agent Skills 目录</span>' +
         '<span><span class="tick">✓</span> 校验发布包完整性</span>' +
-        '<span class="rt">适配状态：<b class="ok">WorkBuddy 已适配</b><b>Claude Code 待适配</b><b>Codex 待适配</b><b>OpenClaw 待适配</b><b>Hermes 待适配</b></span>' +
         '<span class="rt">校验方式：<b>SHA-256</b></span>';
     }
     function updCmd() {
       var sel = [].slice.call(optsBox.querySelectorAll('input:checked')).map(function (b) { return b.dataset.s; }).join(' ');
-      cmd.textContent = (mode === 'all') ? ALL : (ALL + ' -s -- ' + (sel || '<请至少选择一个>'));
+      cmd.textContent = (mode === 'pkg') ? ALL : (ALL + ' -s -- ' + (sel || '<请至少选择一个>'));
     }
     function setMode(m) {
       mode = m;
       bskTabs.forEach(function (t) { t.classList.toggle('active', t.dataset.m === m); });
-      if (mode === 'all') {
-        title.textContent = '一次安装全部 6 个 Skills';
-        sub.textContent = '包含直销、公司、渠道、MDC、MAX、星火 6 类专业顾问能力。安装器会自动识别当前 Agent 的 Skills 目录，并安装所有选中的 Skills。';
+      if (mode === 'pkg') {
+        title.textContent = '一个整合技能，装完全部能力';
+        sub.textContent = '将 6 个数据入口封装为单一的 HBG DataHub 整合技能，默认安装命令一键完成，无需关心内部结构。';
         feat.style.display = ''; optsBox.style.display = 'none';
-        cmd.textContent = ALL;
       } else {
-        title.textContent = '只安装需要的顾问';
-        sub.textContent = '按需勾选要启用的数据能力，安装命令会自动拼接对应 Skills 的 ID。';
+        title.textContent = '独立安装 Skills';
+        sub.textContent = '默认勾选全部 6 个数据能力；取消勾选即按需安装，命令会自动拼接所选 Skills 的 ID。';
         feat.style.display = 'none'; optsBox.style.display = '';
-        updCmd();
       }
+      updCmd();
       copyBtn.textContent = '⧉ 复制'; copyBtn.classList.remove('copied');
     }
     function copyText(txt) {
@@ -247,7 +245,7 @@
         var c = document.getElementById('catalog'); if (c) c.scrollIntoView({ behavior: 'smooth' });
       });
     }
-    setMode('all');
+    setMode('pkg');
   })();
 
   /* ============================================================
@@ -412,5 +410,28 @@
 
   /* ---- ECharts fallback（最后执行，不阻塞主逻辑） ---- */
   ensureEcharts();
+
+  /* ---- 快速安装命令复制 ---- */
+  var qC = document.getElementById('qCopy');
+  var qCmd = document.getElementById('qCmd');
+  if (qC && qCmd) {
+    qC.addEventListener('click', function () {
+      var txt = qCmd.textContent;
+      var done = function () {
+        qC.textContent = '已复制 ✓'; qC.classList.add('copied');
+        setTimeout(function () { qC.textContent = '⧉ 复制命令'; qC.classList.remove('copied'); }, 2000);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(txt).then(done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        done();
+      }
+    });
+  }
 
 })();

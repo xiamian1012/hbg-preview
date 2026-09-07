@@ -91,13 +91,98 @@
   <div class="wrap">
     <div class="sec-head reveal" style="margin-bottom:34px">
       <div class="eyebrow">STEP BY STEP</div>
-      <h2 class="sec-h2">不用理解技术差异，直接开问</h2>
-      <p class="sec-sub">三分钟，把数据能力装进你的工作流。</p>
+      <h2 class="sec-h2">零门槛，装好就能直接开问</h2>
+      <p class="sec-sub">不用理解技术差异，三分钟把数据能力装进你的工作流。</p>
     </div>
-    <div class="ask-grid">
-      <div class="reveal ask-card"><div class="n">1</div><h3>美事一键授权</h3><p>数据权限自动获取，只需配合点击一次美事登录授权即可开问。</p></div>
-      <div class="reveal ask-card"><div class="n">2</div><h3>说出你的问题</h3><p>直接告诉它要什么数据、什么维度、如何对比。</p></div>
-      <div class="reveal ask-card"><div class="n">3</div><h3>拿数据与报告</h3><p>拿到结论、excel 与可视化报告，随时在线化分享。</p></div>
+    <div class="acc">
+      <div class="acard reveal">
+        <div class="no">STEP 1</div>
+        <h4>美事一键授权</h4>
+        <p>只需配合点击一次美事登录授权即可开问，环境依赖自动装好，无需手动配置。</p>
+        <div class="code"># meishi 授权 → 权限自动就绪</div>
+      </div>
+      <div class="acard reveal">
+        <div class="no">STEP 2</div>
+        <h4>说出你的需求</h4>
+        <p>直接告诉它你的数据需求是什么，维度/周期/指标，分析重点</p>
+        <div class="code">"查华东大区本月续费率"</div>
+      </div>
+      <div class="acard reveal">
+        <div class="no">STEP 3</div>
+        <h4>拿数据与报告</h4>
+        <p>拿到结论、excel 与可视化报告，随时在线化分享。</p>
+        <div class="code">→ report link · 美事</div>
+      </div>
+    </div>
+    <div class="q-sep reveal">
+      <span class="q-chev q-chev-l" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l-5-5 5-5M19 17l-5-5 5-5"/></svg></span>
+      <span class="q-sep-t">快速开始</span>
+      <span class="q-chev q-chev-r" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 17l5-5-5-5M5 17l5-5-5-5"/></svg></span>
+    </div>
+    <div class="qstart reveal">
+      <div class="q-opt">
+        <div class="q-opt-top">
+          <span class="q-opt-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span>
+          <svg class="q-opt-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+        <span class="q-opt-t">一键安装</span>
+        <span class="q-opt-d">提示词安装，自动识别 Skills 目录，免配置环境，装完即可开问。</span>
+        <div class="q-opt-ft"><span class="q-opt-badge">已适配 WorkBuddy</span><span class="q-opt-meta">覆盖 6 个数据源</span></div>
+      </div>
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-rec">推荐方式</span>
+          <button class="q-more" data-goto="skills">查看详情 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+        <h3 class="q-title">安装全部 DataHub Skills</h3>
+        <p class="q-sub">复制下面的内容，发送给你正在使用的 Agent。</p>
+        <div class="q-code">
+          <div class="q-code-h"><span class="lang">prompt</span><button class="q-copy" id="qCopy">⧉ 复制</button></div>
+          <pre class="q-cmd" id="qCmd">请直接执行下面的官方安装命令，完成 HBG Skills 的下载与安装：&#10;curl -fsSL https://raw.githubusercontent.com/58hbg/wenshu-hbg/main/skills/install.sh | bash</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Workflow / before-after -->
+<section id="workflow">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Pipeline</div>
+      <h2 class="sec-h2">复杂分析，一气呵成</h2>
+      <p class="sec-sub">把过去动辄数小时的多系统来回，压缩成一句自然语言和一条完整链路。</p>
+    </div>
+
+    <div class="ba reveal">
+      <div class="ba-card dim">
+        <h4>以前 · 一次分析，多次切换</h4>
+        <ul>
+          <li>登录多个平台，导出多份 excel</li>
+          <li>手动画表、拼口径、对指标</li>
+          <li>复制粘贴做 PPT / 截图</li>
+          <li>找渠道发文件给同事</li>
+        </ul>
+      </div>
+      <div class="ba-go">→</div>
+      <div class="ba-card go">
+        <h4>现在 · 一句话，自动完成</h4>
+        <ul>
+          <li>理解自然语言意图并路由数据源</li>
+          <li>语义取数 + 专业口径计算</li>
+          <li>归因分析 + HTML 可视化报告</li>
+          <li>在线化发布 + 美事直达</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pipe" style="margin-top:52px">
+      <div class="pstep reveal"><div class="n">01</div><h4>说一句</h4><p>用自然语言描述你想看的业务问题。</p><span class="ar">→</span></div>
+      <div class="pstep reveal"><div class="n">02</div><h4>语义取数</h4><p>意图解析 + 指标匹配 + DSL 执行。</p><span class="ar">→</span></div>
+      <div class="pstep reveal"><div class="n">03</div><h4>归因分析</h4><p>趋势、结构、下钻、漏斗，产出结论。</p><span class="ar">→</span></div>
+      <div class="pstep reveal"><div class="n">04</div><h4>HTML 报告</h4><p>现场生成可视化报告与 excel 留底。</p><span class="ar">→</span></div>
+      <div class="pstep reveal"><div class="n">05</div><h4>在线化</h4><p>发布为可分享的内网链接。</p><span class="ar">→</span></div>
+      <div class="pstep reveal"><div class="n">06</div><h4>美事直达</h4><p>结论与链接一键发到群和同事。</p></div>
     </div>
   </div>
 </section>
@@ -107,7 +192,7 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="eyebrow">One Entry · One Ask</div>
-      <h2 class="sec-h2">一个入口，六个数据源</h2>
+      <h2 class="sec-h2">一个入口，连接所有数据源</h2>
       <p class="sec-sub">无论数据来自哪套系统，都用同一种方式提问。HBG DataHub 帮你路由到正确的数据源并返回结构化结果。</p>
     </div>
 
@@ -219,82 +304,8 @@
   </div>
 </section>
 
-<!-- Workflow / before-after -->
-<section id="workflow" class="alt">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="eyebrow">Pipeline</div>
-      <h2 class="sec-h2">复杂分析，一气呵成</h2>
-      <p class="sec-sub">把过去动辄数小时的多系统来回，压缩成一句自然语言和一条完整链路。</p>
-    </div>
-
-    <div class="ba reveal">
-      <div class="ba-card dim">
-        <h4>以前 · 一次分析，多次切换</h4>
-        <ul>
-          <li>登录多个平台，导出多份 excel</li>
-          <li>手动画表、拼口径、对指标</li>
-          <li>复制粘贴做 PPT / 截图</li>
-          <li>找渠道发文件给同事</li>
-        </ul>
-      </div>
-      <div class="ba-go">→</div>
-      <div class="ba-card go">
-        <h4>现在 · 一句话，自动完成</h4>
-        <ul>
-          <li>理解自然语言意图并路由数据源</li>
-          <li>语义取数 + 专业口径计算</li>
-          <li>归因分析 + HTML 可视化报告</li>
-          <li>在线化发布 + 美事直达</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="pipe" style="margin-top:52px">
-      <div class="pstep reveal"><div class="n">01</div><h4>说一句</h4><p>用自然语言描述你想看的业务问题。</p><span class="ar">→</span></div>
-      <div class="pstep reveal"><div class="n">02</div><h4>语义取数</h4><p>意图解析 + 指标匹配 + DSL 执行。</p><span class="ar">→</span></div>
-      <div class="pstep reveal"><div class="n">03</div><h4>归因分析</h4><p>趋势、结构、下钻、漏斗，产出结论。</p><span class="ar">→</span></div>
-      <div class="pstep reveal"><div class="n">04</div><h4>HTML 报告</h4><p>现场生成可视化报告与 excel 留底。</p><span class="ar">→</span></div>
-      <div class="pstep reveal"><div class="n">05</div><h4>在线化</h4><p>发布为可分享的内网链接。</p><span class="ar">→</span></div>
-      <div class="pstep reveal"><div class="n">06</div><h4>美事直达</h4><p>结论与链接一键发到群和同事。</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- Access -->
-<section id="access">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="eyebrow">Three Steps</div>
-      <h2 class="sec-h2">三步，把数据交给自己</h2>
-      <p class="sec-sub">不是配系统，而是配一个随时可问的「数据助手」。</p>
-    </div>
-
-    <div class="acc">
-      <div class="acard reveal">
-        <div class="no">STEP 1</div>
-        <h4>美事一键授权</h4>
-        <p>数据权限自动获取，只需配合点击一次美事登录授权，即可在权限范围内开始查询。</p>
-        <div class="code"># meishi 授权 → 权限自动就绪</div>
-      </div>
-      <div class="acard reveal">
-        <div class="no">STEP 2</div>
-        <h4>说出你的问题</h4>
-        <p>把需求用一句大白话告诉我：要什么数据、什么维度、怎么对比。</p>
-        <div class="code">"查华东大区本月续费率"</div>
-      </div>
-      <div class="acard reveal">
-        <div class="no">STEP 3</div>
-        <h4>拿数据与报告</h4>
-        <p>拿到结构化结论、excel 与 HTML 报告，需要时在线化并发给团队。</p>
-        <div class="code">→ report link · 美事</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- Boundary -->
-<section class="alt">
+<section>
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="eyebrow">Trust &amp; Boundary</div>
@@ -309,7 +320,7 @@
 </section>
 
 <!-- Provenance · 出品方 -->
-<section id="provenance">
+<section id="provenance" class="alt">
   <div class="wrap">
     <div class="sec-head reveal" style="max-width:none;text-align:center;margin-left:auto;margin-right:auto">
       <div class="eyebrow">PROVENANCE</div>
@@ -359,8 +370,8 @@
 
       <div class="bsk-shell reveal">
         <div class="bsk-tabs">
-          <button class="bsk-tab active" data-m="all">安装全部</button>
-          <button class="bsk-tab" data-m="select">按需安装</button>
+          <button class="bsk-tab active" data-m="pkg">整合版</button>
+          <button class="bsk-tab" data-m="standalone">独立版</button>
         </div>
         <div class="bsk-body">
           <div>
