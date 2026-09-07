@@ -46,19 +46,30 @@
 
     var timer = null, stepTimer = null, flow = null, idx = 0;
     var chartInsts = [];
+    var pending = [];
 
     function initCharts(root) {
       chartInsts.forEach(function (c) { try { c.dispose(); } catch (e) { } });
       chartInsts = [];
+      pending = [];
       if (typeof echarts === 'undefined') return;
       root.querySelectorAll('[data-chart]').forEach(function (el) {
         var opt = CHART_OPTS[el.dataset.chart];
-        if (!opt) return;
+        if (opt) pending.push(el);
+      });
+    }
+
+    function startCharts(scope) {
+      pending = pending.filter(function (el) {
+        var opt = CHART_OPTS[el.dataset.chart];
+        if (!opt) return false;
+        if (scope && !scope.contains(el)) return true;
         try {
           var c = echarts.init(el);
           c.setOption(opt());
           chartInsts.push(c);
-        } catch (e) { }
+          return false;
+        } catch (e) { return true; }
       });
     }
 
@@ -99,6 +110,7 @@
           var el = rows[li++];
           el.style.opacity = '1';
           el.style.transform = 'none';
+          startCharts(el);
           scrollBottom();
           stepTimer = setTimeout(next, ri(LINE_MIN, LINE_MAX));
         }
@@ -118,6 +130,7 @@
         }
         var m = items[i++];
         var isAI = m.classList.contains('ai');
+        m.style.display = '';
         if (isAI) {
           var bub = m.querySelector('.bub');
           [].slice.call(bub.children).forEach(function (el) {
@@ -125,7 +138,6 @@
             el.style.opacity = '0';
           });
         }
-        m.style.display = '';
         if (!isAI) m.style.animation = 'msgUp .4s ease';
         scrollBottom();
         if (isAI) {
@@ -147,6 +159,7 @@
             el.style.transform = 'none';
           });
         });
+        startCharts(flow);
         scrollBottom();
       }
     }
@@ -195,7 +208,7 @@
 
     function buildOpts() {
       optsBox.innerHTML = INSTALL_SKILLS.map(function (s) {
-        return '<label class="bsk-opt"><input type="checkbox" data-s="' + s[0] + '" checked>' + s[1] + ' <code>' + s[2] + '</code></label>';
+        return '<label class="bsk-opt"><input type="checkbox" data-s="' + s[0] + '" checked><span class="nm">' + s[1] + '</span><code>' + s[2] + '</code></label>';
       }).join('');
       [].slice.call(optsBox.querySelectorAll('input')).forEach(function (b) { b.addEventListener('change', updCmd); });
     }
@@ -203,6 +216,7 @@
       feat.innerHTML =
         '<span><span class="tick">✓</span> 自动识别 Agent Skills 目录</span>' +
         '<span><span class="tick">✓</span> 校验发布包完整性</span>' +
+        '<span><span class="tick">✓</span> 自动更新到最新版</span>' +
         '<span class="rt">校验方式：<b>SHA-256</b></span>';
     }
     function updCmd() {
@@ -323,8 +337,7 @@
       '<div class="dd">' + s.desc + '</div>' +
       '<div class="dv-h">核心能力</div><ul>' + s.uses.map(function (u) { return '<li>' + u + '</li>'; }).join('') + '</ul>' +
       '<div class="dv-h">示例问题</div><div class="ask">' + s.ex + '</div>' +
-      '<div class="mcmd"><div class="h">安装命令</div><div class="cmd">' + s.cmd + '</div>' +
-      '<button class="copy" data-copy>复制命令</button></div>';
+      '<div class="mcmd"><div class="mcmd-h"><span class="lang">bash</span><button class="copy" data-copy>复制命令</button></div><div class="cmd">' + s.cmd + '</div></div>';
     ov.classList.add('open');
     ov.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
