@@ -260,8 +260,10 @@
     if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(txt);
     var ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
     document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); } catch (e) { }
-    document.body.removeChild(ta); return Promise.resolve();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { }
+    document.body.removeChild(ta);
+    return ok ? Promise.resolve() : Promise.reject(new Error('copy failed'));
   }
 
   /* ============================================================
@@ -282,6 +284,7 @@
     return ROUTES.indexOf(h) !== -1 ? h : 'home';
   }
 
+  var firstRender = true;
   function render(tab) {
     Object.keys(VIEWS).forEach(function (k) { VIEWS[k].style.display = (k === tab) ? '' : 'none'; });
     navTabs.forEach(function (t) { t.classList.toggle('active', t.dataset.tab === tab); });
@@ -293,7 +296,11 @@
     if (tab !== 'home') {
       if (heroDemo) heroDemo.stop();
       if (iDemo) iDemo.stop();
+    } else if (!firstRender && heroDemo) {
+      /* 切回 home 时重启 hero 演示（stop 已清掉递归 setTimeout 链，不重启会停在最后一帧） */
+      heroDemo.show('ask', { animate: true, manual: false });
     }
+    firstRender = false;
   }
 
   function go(tab) {
@@ -342,7 +349,7 @@
       '<div class="dd">' + s.desc + '</div>' +
       '<div class="dv-h">核心能力</div><ul>' + s.uses.map(function (u) { return '<li>' + u + '</li>'; }).join('') + '</ul>' +
       '<div class="dv-h">示例问题</div><div class="ask">' + s.ex + '</div>' +
-      '<div class="mcmd"><div class="mcmd-h"><span class="lang">bash</span><button class="copy" data-copy>复制命令</button></div><div class="cmd">' + s.cmd + '</div></div>';
+      '<div class="mcmd"><div class="mcmd-h"><span class="lang">bash</span><button class="copy" data-copy>⧉ 复制</button></div><div class="cmd">' + s.cmd + '</div></div>';
     ov.classList.add('open');
     ov.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -357,19 +364,20 @@
     dv.addEventListener('click', function (e) {
       if (e.target.closest('.dv-x')) return closeSkill();
       var c = e.target.closest('[data-copy]');
-      if (c && c.textContent === '复制命令') {
-        var txt = c.parentElement.querySelector('.cmd').textContent;
+      if (c && !c.classList.contains('copied')) {
+        var txt = c.closest('.mcmd').querySelector('.cmd').textContent;
         copyText(txt).then(function () {
           c.textContent = '已复制 ✓'; c.classList.add('copied');
-          setTimeout(function () { c.textContent = '复制命令'; c.classList.remove('copied'); }, 2000);
+          setTimeout(function () { c.textContent = '⧉ 复制'; c.classList.remove('copied'); }, 2000);
         }).catch(function () {
           c.textContent = '复制失败'; c.classList.add('copied');
-          setTimeout(function () { c.textContent = '复制命令'; c.classList.remove('copied'); }, 2000);
+          setTimeout(function () { c.textContent = '⧉ 复制'; c.classList.remove('copied'); }, 2000);
         });
       }
     });
   }
   /* Fix #5: 从首页克隆技能卡片到 Skills 视图，避免重复 HTML */
+  /* 同时用 SKILLS 对象的 desc 统一注入卡片描述，消除两处维护 */
   var homeCards = document.querySelectorAll('#view-home .map-grid .mcard');
   var catalogGrid = document.getElementById('catalogGrid');
   if (catalogGrid && homeCards.length) {
@@ -377,8 +385,16 @@
       catalogGrid.appendChild(card.cloneNode(true));
     });
   }
-  document.querySelectorAll('[data-skill]').forEach(function (c) { c.addEventListener('click', function () { openSkill(c.dataset.skill); }); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && document.getElementById('skillOv').classList.contains('open')) closeSkill(); });
+  /* 统一注入卡片描述 */
+  document.querySelectorAll('[data-skill]').forEach(function (c) {
+    var s = SKILLS[c.dataset.skill];
+    if (s) {
+      var desc = c.querySelector('.mc-desc');
+      if (desc) desc.textContent = s.desc;
+    }
+    c.addEventListener('click', function () { openSkill(c.dataset.skill); });
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ov.classList.contains('open')) closeSkill(); });
 
   /* ---- Hero 演示（自动轮播） ---- */
   heroDemo = createDemoPlayer({
@@ -408,7 +424,8 @@
       entries.forEach(function (e) {
         if (e.isIntersecting) {
           iDemo.show('ask', { animate: true, manual: true });
-          scrollIO.unobserve(e.target);
+        } else {
+          iDemo.stop();
         }
       });
     }, { threshold: 0.3 });
@@ -442,27 +459,32 @@
     }
     /* 用 rAF 等浏览器重排后，读取 section 内容区实际留白来定位 */
     requestAnimationFrame(function () {
-      var wrap = document.querySelector('section:not(.hero) .wrap');
+      /* 选第一个可见的 .wrap，跳过 display:none 的 view 内的元素 */
+      var wraps = document.querySelectorAll('section:not(.hero) .wrap');
+      var wrap = null;
+      for (var i = 0; i < wraps.length; i++) {
+        if (wraps[i].getBoundingClientRect().width > 0) { wrap = wraps[i]; break; }
+      }
       if (!wrap) return;
+      /* 重读当前 zoom，避免多次 fit 调用的闭包 z 过时 */
+      var cz = parseFloat(root.style.zoom) || z;
       var wr = wrap.getBoundingClientRect();
-      /* wrap.left 是缩放后的留白（显示像素），目录也缩放，需除以 z 补偿 */
       var leftGap = wr.left;
       var rightGap = window.innerWidth - wr.right;
-      /* 目录缩放后宽 = 176*z，居中显示位置 = (leftGap - 176*z) / 2，设的 left = 显示值 / z */
       if (sideDir) {
-        sideDir.style.left = ((leftGap - 90 * z) / 2 / z) + 'px';
+        sideDir.style.left = ((leftGap - 90 * cz) / 2 / cz) + 'px';
       }
       if (toTopBtn) {
-        toTopBtn.style.right = ((rightGap - 46 * z) / 2 / z) + 'px';
+        toTopBtn.style.right = ((rightGap - 46 * cz) / 2 / cz) + 'px';
       }
       if (sideDirSkills) {
-        sideDirSkills.style.left = ((leftGap - 90 * z) / 2 / z) + 'px';
+        sideDirSkills.style.left = ((leftGap - 90 * cz) / 2 / cz) + 'px';
       }
       if (toTopBtnSkills) {
-        toTopBtnSkills.style.right = ((rightGap - 46 * z) / 2 / z) + 'px';
+        toTopBtnSkills.style.right = ((rightGap - 46 * cz) / 2 / cz) + 'px';
       }
       if (toTopBtnChangelog) {
-        toTopBtnChangelog.style.right = ((rightGap - 46 * z) / 2 / z) + 'px';
+        toTopBtnChangelog.style.right = ((rightGap - 46 * cz) / 2 / cz) + 'px';
       }
     });
   }
@@ -484,11 +506,11 @@
       var txt = qCmd.textContent;
       var done = function () {
         qC.textContent = '已复制 ✓'; qC.classList.add('copied');
-        setTimeout(function () { qC.textContent = '⧉ 复制命令'; qC.classList.remove('copied'); }, 2000);
+        setTimeout(function () { qC.textContent = '⧉ 复制'; qC.classList.remove('copied'); }, 2000);
       };
       var fail = function () {
         qC.textContent = '复制失败'; qC.classList.add('copied');
-        setTimeout(function () { qC.textContent = '⧉ 复制命令'; qC.classList.remove('copied'); }, 2000);
+        setTimeout(function () { qC.textContent = '⧉ 复制'; qC.classList.remove('copied'); }, 2000);
       };
       copyText(txt).then(done).catch(fail);
     });
@@ -560,6 +582,10 @@
     var raf = 0, cur = -2, curSkills = -2;
     var ring = toTop.querySelector('.ring .fg'), RC = 135.1;
     var ringSkills = skillsToTop ? skillsToTop.querySelector('.ring .fg') : null;
+    var ringChangelog = toTopBtnChangelog ? toTopBtnChangelog.querySelector('.ring .fg') : null;
+    /* 缓存深色区域和浮层元素，避免每帧 querySelectorAll */
+    var darkZones = [].slice.call(document.querySelectorAll('.closing, footer'));
+    var floatingEls = [toTop, skillsToTop, toTopBtnChangelog, dirNav, skillsDirNav].filter(Boolean);
 
     function update() {
       raf = 0;
@@ -577,8 +603,6 @@
       if (toTopBtnChangelog) toTopBtnChangelog.classList.toggle('show', onChangelog && y > vh * 0.5);
 
       /* 检测返回顶部按钮和目录是否在深色区域（closing section + footer）上 */
-      var darkZones = document.querySelectorAll('.closing, footer');
-      var floatingEls = [toTop, skillsToTop, toTopBtnChangelog, dirNav, skillsDirNav].filter(Boolean);
       floatingEls.forEach(function (el) {
         var br = el.getBoundingClientRect();
         var cx = br.left + br.width / 2;
@@ -591,8 +615,10 @@
         el.classList.toggle('dark', onDark);
       });
       /* 进度环 */
-      if (ring) ring.style.strokeDashoffset = RC * (1 - Math.min(1, y / max));
-      if (ringSkills) ringSkills.style.strokeDashoffset = RC * (1 - Math.min(1, y / max));
+      var ringOffset = RC * (1 - Math.min(1, y / max));
+      if (ring) ring.style.strokeDashoffset = ringOffset;
+      if (ringSkills) ringSkills.style.strokeDashoffset = ringOffset;
+      if (ringChangelog) ringChangelog.style.strokeDashoffset = ringOffset;
 
       /* 首页目录：滚过 Hero 后显示，页脚区域也能适应深色 */
       var heroBottom = hero ? (y + hero.getBoundingClientRect().bottom) : vh;

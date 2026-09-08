@@ -29,7 +29,7 @@ const SKILLS = {
   },
   channel: {
     name: '渠道', code: 'hbg-channel', st: 'dev', stt: '开发中', en: 'HBG · 渠道',
-    desc: '沿用直销组织架构（渠道-大区-高经-渠经-主城-城市），可一路拆分；面向渠道业务的数据接入与统一查询，补齐直销/公司后的「渠道侧」视图，开发中。',
+    desc: '使用渠道特定组织架构（渠道-大区-高经-渠经-主城-城市），可一路拆分；面向渠道业务的数据接入与统一查询，补齐直销/公司后的「渠道侧」视图，开发中。',
     uses: ['渠道业绩 / 渠道拓展专题', '渠道数据源统一接入（规划中）', '与直销、公司同一条查询链路'],
     ex: '「我想看渠道业务这个月的数据」',
     cmd: 'curl -fsSL https://raw.githubusercontent.com/58hbg/wenshu-hbg/main/skills/install.sh | bash -s -- channel'
@@ -42,7 +42,7 @@ const SKILLS = {
     cmd: 'curl -fsSL https://raw.githubusercontent.com/58hbg/wenshu-hbg/main/skills/install.sh | bash -s -- mdc'
   },
   max: {
-    name: 'MAX', code: 'hbg-max', st: 'inner', stt: '内部平台', en: 'HBG · 数据沉淀',
+    name: 'MAX', code: 'hbg-max', st: 'inner', stt: '内部平台', en: 'HBG · 数据保存',
     desc: 'MAX 明细报表查询与导出：按报表/日期/筛选器灵活查询，异步导出大文件，保存到工作区供分析复用。',
     uses: ['按需拉取 MAX 平台数据文件', '统一保存到工作区', '供后续分析 / 报告复用'],
     ex: '「下载 MAX 明细报表并保存」',
