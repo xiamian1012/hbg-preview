@@ -8,7 +8,6 @@
 <title>HBG DataHub · 智能数据平台 | 连接数据平台，遍览 HBG 业务</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMyAxLjUgMjQgMjciIGZpbGw9Im5vbmUiPjxwYXRoIGQ9Ik0xNSAyLjUgMjYgOC41djEzTDE1IDI3LjUgNCAyMS41di0xM3oiIGZpbGw9IiMyNTYzZWIiLz48cGF0aCBkPSJNMTUgMTVWOE0xNSAxNXY3TTE1IDE1SDhNMTUgMTVoNyIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utb3BhY2l0eT0iLjUiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjE1IiByPSIzIiBmaWxsPSIjZmZmIi8+PGNpcmNsZSBjeD0iMTUiIGN5PSI4IiByPSIxLjUiIGZpbGw9IiNmZmYiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjIyIiByPSIxLjUiIGZpbGw9IiNmZmYiLz48Y2lyY2xlIGN4PSI4IiBjeT0iMTUiIHI9IjEuNSIgZmlsbD0iI2ZmZiIvPjxjaXJjbGUgY3g9IjIyIiBjeT0iMTUiIHI9IjEuNSIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==">
 <link rel="stylesheet" href="css/styles.css">
-<script src="https://cdn.jsdelivr.net/npm/echarts@6.0.0/dist/echarts.min.js"></script>
 </head>
 <body id="top">
 
@@ -26,6 +25,23 @@
 </header>
 
 <div class="view" id="view-home">
+  <nav class="side-dir" id="sideDir" aria-label="页面目录">
+    <div class="dir-head"><span class="dir-dot"></span>目录</div>
+    <ul class="dir-list">
+      <li data-goto-sec="start"><button type="button">快速上手<i class="dir-bar"></i></button></li>
+      <li data-goto-sec="workflow"><button type="button">工作流程<i class="dir-bar"></i></button></li>
+      <li data-goto-sec="map"><button type="button">覆盖平台<i class="dir-bar"></i></button></li>
+      <li data-goto-sec="capability"><button type="button">能力矩阵<i class="dir-bar"></i></button></li>
+      <li data-goto-sec="interact"><button type="button">交互演示<i class="dir-bar"></i></button></li>
+      <li data-goto-sec="boundary"><button type="button">信任边界<i class="dir-bar"></i></button></li>
+      <li data-goto-sec="tech"><button type="button">机制保障<i class="dir-bar"></i></button></li>
+      <li data-goto-sec="provenance"><button type="button">出品团队<i class="dir-bar"></i></button></li>
+    </ul>
+  </nav>
+  <button class="to-top" id="toTop" type="button" aria-label="返回顶部">
+    <svg class="ring" viewBox="0 0 46 46" aria-hidden="true"><circle class="fg" cx="23" cy="23" r="21.5" stroke-dasharray="135.1" stroke-dashoffset="135.1"/></svg>
+    <svg class="up" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
 
 <!-- Hero -->
 <section class="hero">
@@ -129,7 +145,7 @@
         </div>
         <span class="q-opt-t">一键安装</span>
         <span class="q-opt-d">提示词安装，自动识别 Skills 目录，免配置环境，装完即可开问。</span>
-        <div class="q-opt-ft"><span class="q-opt-badge">已适配 WorkBuddy</span><span class="q-opt-meta">覆盖 6 个数据源</span></div>
+        <div class="q-opt-ft"><span class="q-opt-badge">已适配 WorkBuddy</span></div>
       </div>
       <div class="q-card">
         <div class="q-head">
@@ -225,7 +241,7 @@
         <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M6 3v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18 9a9 9 0 0 1-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="badge dev">开发中</span></div>
         <div class="mc-title">渠道</div>
         <div class="mc-en">hbg-channel</div>
-        <div class="mc-desc">沿用直销组织架构（渠道-大区-高经-渠经-主城-城市），可一路拆分；面向渠道业务的数据接入与统一查询，补齐直销/公司后的「渠道侧」视图，开发中。</div>
+        <div class="mc-desc">使用渠道特定组织架构（渠道-大区-高经-渠经-主城-城市），可一路拆分；面向渠道业务的数据接入与统一查询，补齐直销/公司后的「渠道侧」视图，开发中。</div>
         <div class="tag-row"><span class="tag-chip">渠道业绩</span><span class="tag-chip">渠道拓展</span><span class="tag-chip">资源开发</span><span class="tag-chip">团队管理</span><span class="tag-chip">客户跟进</span></div>
         <div class="mc-ft">规划中，即将上线 →</div>
       </div>
@@ -243,7 +259,7 @@
         <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="m9 15 3 3 3-3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="badge inner">内部平台</span></div>
         <div class="mc-title">MAX</div>
         <div class="mc-en">hbg-max</div>
-        <div class="mc-desc">MAX 明细报表查询与导出：按报表/日期/筛选器灵活查询，异步导出大文件，沉淀到工作区供分析复用。</div>
+        <div class="mc-desc">MAX 明细报表查询与导出：按报表/日期/筛选器灵活查询，异步导出大文件，保存到工作区供分析复用。</div>
         <div class="tag-row"><span class="tag-chip">明细查询</span><span class="tag-chip">异步导出</span><span class="tag-chip">Excel 留底</span><span class="tag-chip">工作区沉淀</span><span class="tag-chip">二次分析</span></div>
         <div class="mc-ft">查看能力 →</div>
       </div>
@@ -307,7 +323,7 @@
 </section>
 
 <!-- Boundary -->
-<section>
+<section id="boundary">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="eyebrow">Trust &amp; Boundary</div>
@@ -321,8 +337,27 @@
   </div>
 </section>
 
+<!-- Tech · 技术特点 -->
+<section id="tech" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">WHY IT WORKS</div>
+      <h2 class="sec-h2">稳定不是人盯，是机制锁</h2>
+      <p class="sec-sub">把「AI 可能犯的错」在机制上挡在门外——你拿到的每一个结果，都可复核、可追溯。</p>
+    </div>
+    <div class="bound">
+      <div class="bcard reveal"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 2h6M12 2v5M5 9h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Z"/><path d="m12 18 5-5M12 18l-5-5M12 18v-2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>你的原话会被保留</h4><p>说了什么就查什么，AI 不会擅自改写你的意思，事后可核对到底查了什么、怎么查的。</p></div>
+      <div class="bcard reveal"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>AI 摸不到底层脚本</h4><p>取数走统一通道，AI 只负责「要什么数」，想改脚本出错都难。</p></div>
+      <div class="bcard reveal"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a5 5 0 0 1 5-5h6a5 5 0 0 1 5 5v2"/></svg>没权限的查不了</h4><p>权限校验在取数之前就拦下，不等到出了数才发现越权。</p></div>
+      <div class="bcard reveal"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3l3 4-3 4"/><path d="M21 7H10a5 5 0 0 0-5 5"/><path d="M6 21l-3-4 3-4"/><path d="M3 17h11a5 5 0 0 0 5-5"/></svg>同样的查询，同样的结果</h4><p>相同请求，永远返回一致、可复现的答复，不随环境或状态漂移——每次都能拿到同一份口径。</p></div>
+      <div class="bcard reveal"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8v4M12 16h.01" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>每个结论讲「为什么」</h4><p>结论都有归因 + 对比定位 + 建议下一步，不是甩一串数字给你。</p></div>
+      <div class="bcard reveal"><h4><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>失败不瞎折腾</h4><p>出错了先自查，参数没问题就如实说原因，不偷偷换条件重试。</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- Provenance · 出品方 -->
-<section id="provenance" class="alt">
+<section id="provenance">
   <div class="wrap">
     <div class="sec-head reveal" style="max-width:none;text-align:center;margin-left:auto;margin-right:auto">
       <div class="eyebrow">PROVENANCE</div>
@@ -360,6 +395,8 @@
 
 <!-- ===================== SKILLS VIEW ===================== -->
 <div class="view" id="view-skills" style="display:none">
+  <nav class="side-dir" id="sideDirSkills" aria-label="页面目录"></nav>
+  <button class="to-top" id="toTopSkills" type="button" aria-label="返回顶部"></button>
 
   <!-- QUICK INSTALL -->
   <section id="install" style="background:var(--alt)">
@@ -413,61 +450,7 @@
         <p class="cat-note">每一个数据入口都对应一个可独立安装的 Skills。点击卡片查看用途、安装命令、核心能力与示例问题；无需的全部不装，各取所需。</p>
       </div>
       <div class="map-grid" id="catalogGrid">
-
-        <div class="mcard reveal" data-skill="direct">
-          <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2Z"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2Z"/><path d="M10 6h4v4h-4zM10 12h4v4h-4zM10 18h4v2h-4z" fill="#fff"/></svg></span><span class="badge live">已上线</span></div>
-          <div class="mc-title">直销</div>
-          <div class="mc-en">hbg-direct</div>
-          <div class="mc-desc">基于智能看板底层数据，345 指标/13 业务专题自然语言查询，覆盖二租商业务，支持组织架构多层级下钻，从城市一路拆到销售。</div>
-          <div class="tag-row"><span class="tag-chip">业绩收入</span><span class="tag-chip">会员新续</span><span class="tag-chip">资源大盘</span><span class="tag-chip">流量线索</span><span class="tag-chip">竞争格局</span></div>
-          <div class="mc-ft">查看能力 →</div>
-        </div>
-
-        <div class="mcard reveal" data-skill="company">
-          <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M5 21V7l8-4v18Z"/><path d="M19 21V11l-6-4v14Z"/><path d="M3 21h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="badge live">已上线</span></div>
-          <div class="mc-title">公司</div>
-          <div class="mc-en">hbg-company</div>
-          <div class="mc-desc">全量经纪公司数据，110 公司级指标，覆盖业绩/会员/连接/资源/套餐/增值等 12 类专题，支持跨公司横向对比与榜单，可与直销联动分析，为客户定制分析报告。</div>
-          <div class="tag-row"><span class="tag-chip">公司业绩</span><span class="tag-chip">新签拉回</span><span class="tag-chip">市场渗透</span><span class="tag-chip">现金流</span><span class="tag-chip">房源生态</span></div>
-          <div class="mc-ft">查看能力 →</div>
-        </div>
-
-        <div class="mcard reveal" data-skill="channel">
-          <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M6 3v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18 9a9 9 0 0 1-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="badge dev">开发中</span></div>
-          <div class="mc-title">渠道</div>
-          <div class="mc-en">hbg-channel</div>
-          <div class="mc-desc">沿用直销组织架构（渠道-大区-高经-渠经-主城-城市），可一路拆分；面向渠道业务的数据接入与统一查询，补齐直销/公司后的「渠道侧」视图，开发中。</div>
-          <div class="tag-row"><span class="tag-chip">渠道业绩</span><span class="tag-chip">渠道拓展</span><span class="tag-chip">资源开发</span><span class="tag-chip">团队管理</span><span class="tag-chip">客户跟进</span></div>
-          <div class="mc-ft">规划中，即将上线 →</div>
-        </div>
-
-        <div class="mcard reveal" data-skill="mdc">
-          <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect width="7" height="7" x="3" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="14" rx="1.5"/><rect width="7" height="7" x="3" y="14" rx="1.5"/></svg></span><span class="badge inner">内部平台</span></div>
-          <div class="mc-title">MDC</div>
-          <div class="mc-en">hbg-mdc</div>
-          <div class="mc-desc">覆盖 180+ API（直销/渠道/代理/经纪/爱房/巧房/HBG），自然语言查询业绩、端口、续费、透支、商圈等 MDC 看板，与 HBG 数据源同一链路。</div>
-          <div class="tag-row"><span class="tag-chip">业绩分析</span><span class="tag-chip">端口效果</span><span class="tag-chip">续费预警</span><span class="tag-chip">商圈排名</span><span class="tag-chip">任务管理</span></div>
-          <div class="mc-ft">查看能力 →</div>
-        </div>
-
-        <div class="mcard reveal" data-skill="max">
-          <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="m9 15 3 3 3-3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="badge inner">内部平台</span></div>
-          <div class="mc-title">MAX</div>
-          <div class="mc-en">hbg-max</div>
-          <div class="mc-desc">MAX 明细报表查询与导出：按报表/日期/筛选器灵活查询，异步导出大文件，沉淀到工作区供分析复用。</div>
-          <div class="tag-row"><span class="tag-chip">明细查询</span><span class="tag-chip">异步导出</span><span class="tag-chip">Excel 留底</span><span class="tag-chip">工作区沉淀</span><span class="tag-chip">二次分析</span></div>
-          <div class="mc-ft">查看能力 →</div>
-        </div>
-
-        <div class="mcard reveal" data-skill="xinghuo">
-          <div class="mc-top"><span class="mc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span><span class="badge live">已上线</span></div>
-          <div class="mc-title">星火</div>
-          <div class="mc-en">hbg-xinghuo</div>
-          <div class="mc-desc">直连星火平台，按报表/日期/筛选器查询有权限的报表数据，支持自然语言取数、下载原始数据并归并到工作区供二次分析与可视化。</div>
-          <div class="tag-row"><span class="tag-chip">报表查询</span><span class="tag-chip">数据下载</span><span class="tag-chip">权限内分析</span><span class="tag-chip">趋势对比</span><span class="tag-chip">月度追踪</span></div>
-          <div class="mc-ft">查看能力 →</div>
-        </div>
-
+        <!-- 技能卡片由 JS 从首页克隆，避免重复 HTML -->
       </div>
     </div>
   </section>
@@ -571,6 +554,8 @@
 
 <!-- ===================== CHANGELOG VIEW ===================== -->
 <div class="view" id="view-changelog" style="display:none">
+  <button class="to-top" id="toTopChangelog" type="button" aria-label="返回顶部"></button>
+
   <section style="padding:78px 0 96px">
     <div class="wrap">
       <div class="sec-head reveal" style="max-width:none;text-align:center;margin-left:auto;margin-right:auto">
@@ -784,17 +769,17 @@
     <div class="foot-grid">
       <div>
         <div class="foot-brand"><svg class="logo" width="28" height="28" viewBox="0 0 30 30" fill="none" aria-hidden="true"><path d="M15 2.5 26 8.5v13L15 27.5 4 21.5v-13z" fill="#2563eb"/><path d="M15 15V8M15 15v7M15 15H8M15 15h7" stroke="#fff" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/><circle cx="15" cy="15" r="3" fill="#fff"/><circle cx="15" cy="8" r="1.5" fill="#fff"/><circle cx="15" cy="22" r="1.5" fill="#fff"/><circle cx="8" cy="15" r="1.5" fill="#fff"/><circle cx="22" cy="15" r="1.5" fill="#fff"/></svg><span>HBG DataHub</span></div>
-        <p class="foot-intro">面向 HBG 的一体化智能数据平台。用一句自然语言，查遍六套系统的数据。</p>
+        <p class="foot-intro">面向HBG的一体化数据查询平台， 自然语言查询全域数据</p>
       </div>
       <div class="foot-col">
         <h4>数据源</h4>
         <ul>
-          <li><a href="#/skills" data-goto="skills">直销 · hbg-direct</a></li>
-          <li><a href="#/skills" data-goto="skills">公司 · hbg-company</a></li>
-          <li><a href="#/skills" data-goto="skills">渠道 · hbg-channel</a></li>
-          <li><a href="#/skills" data-goto="skills">MDC · hbg-mdc</a></li>
-          <li><a href="#/skills" data-goto="skills">MAX · hbg-max</a></li>
-          <li><a href="#/skills" data-goto="skills">星火 · hbg-xinghuo</a></li>
+          <li><a href="#/skills" data-goto="skills"><span class="f-src">直销</span><span class="f-dot">·</span>hbg-direct</a></li>
+          <li><a href="#/skills" data-goto="skills"><span class="f-src">公司</span><span class="f-dot">·</span>hbg-company</a></li>
+          <li><a href="#/skills" data-goto="skills"><span class="f-src">渠道</span><span class="f-dot">·</span>hbg-channel</a></li>
+          <li><a href="#/skills" data-goto="skills"><span class="f-src">MDC</span><span class="f-dot">·</span>hbg-mdc</a></li>
+          <li><a href="#/skills" data-goto="skills"><span class="f-src">MAX</span><span class="f-dot">·</span>hbg-max</a></li>
+          <li><a href="#/skills" data-goto="skills"><span class="f-src">星火</span><span class="f-dot">·</span>hbg-xinghuo</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -803,6 +788,7 @@
           <li><a href="#/home" data-goto="home">首页</a></li>
           <li><a href="#/skills" data-goto="skills">Skills 与安装</a></li>
           <li><a href="#/faq" data-goto="faq">常见问题</a></li>
+          <li><a href="#/changelog" data-goto="changelog">更新日志</a></li>
         </ul>
       </div>
       <div class="foot-col">

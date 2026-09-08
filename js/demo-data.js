@@ -43,9 +43,9 @@ const SKILLS = {
   },
   max: {
     name: 'MAX', code: 'hbg-max', st: 'inner', stt: '内部平台', en: 'HBG · 数据沉淀',
-    desc: 'MAX 明细报表查询与导出：按报表/日期/筛选器灵活查询，异步导出大文件，沉淀到工作区供分析复用。',
-    uses: ['按需拉取 MAX 平台数据文件', '统一沉淀到工作区', '供后续分析 / 报告复用'],
-    ex: '「下载 MAX 明细报表并沉淀」',
+    desc: 'MAX 明细报表查询与导出：按报表/日期/筛选器灵活查询，异步导出大文件，保存到工作区供分析复用。',
+    uses: ['按需拉取 MAX 平台数据文件', '统一保存到工作区', '供后续分析 / 报告复用'],
+    ex: '「下载 MAX 明细报表并保存」',
     cmd: 'curl -fsSL https://raw.githubusercontent.com/58hbg/wenshu-hbg/main/skills/install.sh | bash -s -- max'
   },
   xinghuo: {
