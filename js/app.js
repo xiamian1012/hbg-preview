@@ -13,25 +13,49 @@
 (function () {
   'use strict';
 
-  /* ---- Fix #2: ECharts fallback（替代 document.write） ---- */
+  /* ---- Fix #2: ECharts 异步加载（内网 58cdn 优先，境外 jsdelivr 兜底） ---- */
+  var echartsReady = false;
   function ensureEcharts() {
-    if (typeof echarts !== 'undefined') return;
-    var s = document.createElement('script');
-    s.src = 'https://rrc.58cdn.com.cn/xinghuo_apply/echarts.6.0.0.min.js';
-    s.async = false;
-    document.head.appendChild(s);
+    if (typeof echarts !== 'undefined') { echartsReady = true; return; }
+    function load(src, onok, onerr) {
+      var s = document.createElement('script');
+      s.src = src; s.async = true;
+      s.onload = onok; s.onerror = onerr || function(){};
+      document.head.appendChild(s);
+    }
+    function onLoaded() {
+      if (typeof echarts !== 'undefined') {
+        echartsReady = true;
+        try { window.initDemoCharts && window.initDemoCharts(); } catch(e){}
+        document.querySelectorAll('[data-chart]').forEach(function(el){
+          var opt = CHART_OPTS[el.dataset.chart];
+          if (opt && !el.dataset.echartsInit) {
+            el.dataset.echartsInit = '1';
+            try { echarts.init(el).setOption(opt()); } catch(e){}
+          }
+        });
+      }
+    }
+    load('https://rrc.58cdn.com.cn/xinghuo_apply/echarts.6.0.0.min.js', onLoaded, function(){
+      load('https://cdn.jsdelivr.net/npm/echarts@6.0.0/dist/echarts.min.js', onLoaded);
+    });
   }
 
   /* ---- Reveal IntersectionObserver（全局，供路由切换后重新挂载） ---- */
-  var revealIO = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        revealIO.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(function (el) { revealIO.observe(el); });
+  var revealIO;
+  if ('IntersectionObserver' in window) {
+    revealIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealIO.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { revealIO.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('visible'); });
+  }
 
   /* ============================================================
    * Demo Player 工厂（Fix #9: 统一 hero + interactive 演示）
@@ -40,7 +64,8 @@
   function createDemoPlayer(opts) {
     var container = opts.container;
     var navEl = opts.navEl;
-    var autoLoop = opts.autoLoop || false;
+    var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var autoLoop = opts.autoLoop && !RM ? opts.autoLoop : false;
     var hold = opts.hold || 1500;
     var renderNav = opts.renderNav || false;
 
@@ -112,9 +137,10 @@
           el.style.transform = 'none';
           startCharts(el);
           scrollBottom();
+          if (RM) { next(); return; }
           stepTimer = setTimeout(next, ri(LINE_MIN, LINE_MAX));
         }
-        stepTimer = setTimeout(next, 90);
+        stepTimer = setTimeout(next, RM ? 0 : 90);
       }
 
       var i = 0;
@@ -340,8 +366,10 @@
   /* Skill 弹窗 */
   var ov = document.getElementById('ov');
   var dv = document.getElementById('dv');
+  var lastFocused = null;
   function openSkill(key) {
     var s = SKILLS[key]; if (!s) return;
+    lastFocused = document.activeElement;
     dv.innerHTML =
       '<button class="dv-x" aria-label="关闭">✕</button>' +
       '<div class="dv-eyebrow">SKILL · ' + s.en + '</div>' +
@@ -353,11 +381,14 @@
     ov.classList.add('open');
     ov.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    var closeBtn = dv.querySelector('.dv-x');
+    if (closeBtn) closeBtn.focus();
   }
   function closeSkill() {
     ov.classList.remove('open');
     ov.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
   }
   if (ov) {
     ov.addEventListener('click', function (e) { if (e.target === ov) closeSkill(); });
@@ -392,9 +423,23 @@
       var desc = c.querySelector('.mc-desc');
       if (desc) desc.textContent = s.desc;
     }
+    c.setAttribute('role', 'button');
+    c.setAttribute('tabindex', '0');
     c.addEventListener('click', function () { openSkill(c.dataset.skill); });
+    c.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSkill(c.dataset.skill); }
+    });
   });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ov.classList.contains('open')) closeSkill(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && ov.classList.contains('open')) closeSkill();
+    if (e.key === 'Tab' && ov.classList.contains('open')) {
+      var focusable = dv.querySelectorAll('button,a[href],input,select,textarea,[tabindex]:not([tabindex="-1"])');
+      if (focusable.length === 0) return;
+      var first = focusable[0], last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
 
   /* ---- Hero 演示（自动轮播） ---- */
   heroDemo = createDemoPlayer({

@@ -13,7 +13,7 @@
   font-display:block;
 }
 :root{
-  --bg:#ffffff; --fg:#111318; --muted:#61666f; --faint:#9aa0aa;
+  --bg:#ffffff; --fg:#111318; --muted:#61666f; --faint:#7d8696;
   --accent:#2563eb; --accent-soft:#2563eb14; --line:#e7e9ee;
   --font:"PingFangTest","PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --alt:#f6f7f9; --panel:#0e1420;
@@ -162,7 +162,7 @@ a.btn{display:inline-flex;align-items:center;justify-content:center}
 .nl{font-size:11.5px;color:var(--faint);margin:0 0 5px}
 .ln{font-family:var(--mono);font-size:12.2px;color:#5a6478;line-height:1.8}
 .ln+.ln{margin-top:1px}
-.ln .dim{color:#98a1b3}
+.ln .dim{color:#7d8696}
 .ln .ind{color:#3b5bdb;background:#eef2ff;border:1px solid #dbe4fb;padding:0 5px;border-radius:4px;font-size:11.5px}
 .ln .ok{color:#0a9d6d;font-weight:700}
 .ln.done{color:#0a9d6d;font-weight:600}
@@ -595,3 +595,6 @@ footer{background:#080e1a;border-top:1px solid #16203a;padding:52px 0 22px;font-
   background:linear-gradient(135deg,rgba(30,41,59,.8) 0%,rgba(15,23,42,.6) 50%,rgba(30,41,59,.7) 100%);
   box-shadow:inset 0 1px 1px rgba(255,255,255,.25),0 12px 36px -8px rgba(37,99,235,.4),0 2px 8px rgba(0,0,0,.2);
 }
+
+/* demo-tag: 演示数据标注 */
+.demo-tag{font-size:11px;color:var(--faint);font-family:var(--mono);white-space:nowrap;padding:2px 8px;background:rgba(125,134,150,.08);border-radius:4px}
