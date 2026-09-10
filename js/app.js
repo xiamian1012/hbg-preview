@@ -8,15 +8,16 @@
  *   #6  ECharts 无 try-catch → init/setOption 包裹
  *   #9  show() 重复 → createDemoPlayer 工厂统一
  *   #10 io 命名碰撞 → 重命名为 scrollIO
+ *   #11 无 IntersectionObserver 时 render() 崩溃 → revealIO 空值保护
+ *   #12 页内锚点双滚动 / hero 演示重播 → JS 平滑滚动 + replaceState
  * ============================================================ */
 
 (function () {
   'use strict';
 
   /* ---- Fix #2: ECharts 异步加载（内网 58cdn 优先，境外 jsdelivr 兜底） ---- */
-  var echartsReady = false;
   function ensureEcharts() {
-    if (typeof echarts !== 'undefined') { echartsReady = true; return; }
+    if (typeof echarts !== 'undefined') return;
     function load(src, onok, onerr) {
       var s = document.createElement('script');
       s.src = src; s.async = true;
@@ -25,8 +26,6 @@
     }
     function onLoaded() {
       if (typeof echarts !== 'undefined') {
-        echartsReady = true;
-        try { window.initDemoCharts && window.initDemoCharts(); } catch(e){}
         document.querySelectorAll('[data-chart]').forEach(function(el){
           var opt = CHART_OPTS[el.dataset.chart];
           if (opt && !el.dataset.echartsInit) {
@@ -90,8 +89,9 @@
         if (!opt) return false;
         if (scope && !scope.contains(el)) return true;
         try {
-          var c = echarts.init(el);
+          var c = echarts.getInstanceByDom(el) || echarts.init(el);
           c.setOption(opt());
+          el.dataset.echartsInit = '1';
           chartInsts.push(c);
           return false;
         } catch (e) { return true; }
@@ -232,7 +232,8 @@
 
     function buildOpts() {
       optsBox.innerHTML = INSTALL_SKILLS.map(function (s) {
-        return '<label class="bsk-opt"><input type="checkbox" data-s="' + s[0] + '" checked><span class="nm">' + s[1] + '</span><code>' + s[2] + '</code></label>';
+        var dev = (s[0] === 'channel');
+        return '<label class="bsk-opt' + (dev ? ' dev' : '') + '"><input type="checkbox" data-s="' + s[0] + '"' + (dev ? ' disabled' : ' checked') + '><span class="nm">' + s[1] + '</span><code>' + s[2] + '</code>' + (dev ? '<span class="bsk-st">开发中 · 暂不可装</span>' : '') + '</label>';
       }).join('');
       [].slice.call(optsBox.querySelectorAll('input')).forEach(function (b) { b.addEventListener('change', updCmd); });
     }
@@ -252,26 +253,26 @@
       bskTabs.forEach(function (t) { t.classList.toggle('active', t.dataset.m === m); });
       if (mode === 'pkg') {
         title.textContent = '一个整合技能，装完全部能力';
-        sub.textContent = '将各个数据入口封装为单一的 HBG DataHub 整合技能，默认安装命令一键完成，无需关心内部结构。';
+        sub.textContent = '将直销、公司、MDC、MAX、星火 5 个已就绪数据入口封装为单一的 HBG DataHub 整合技能，默认安装命令一键完成；渠道开发中，上线后随更新自动并入。';
         feat.style.display = ''; optsBox.style.display = 'none';
       } else {
         title.textContent = '独立安装 Skills';
-        sub.textContent = '默认勾选全部已就绪的数据能力；取消勾选即按需安装，命令会自动拼接所选 Skills 的 ID。';
+        sub.textContent = '默认勾选全部已就绪的数据能力；渠道为开发中、默认不安装。取消勾选即按需安装，命令自动拼接所选 Skills 的 ID。';
         feat.style.display = 'none'; optsBox.style.display = '';
       }
       updCmd();
-      copyBtn.textContent = '⧉ 复制'; copyBtn.classList.remove('copied');
+      copyBtn.querySelector('span').textContent = '复制'; copyBtn.classList.remove('copied');
     }
 
     buildFeat(); buildOpts();
     bskTabs.forEach(function (t) { t.addEventListener('click', function () { setMode(t.dataset.m); }); });
     copyBtn.addEventListener('click', function () {
       copyText(cmd.textContent).then(function () {
-        copyBtn.textContent = '已复制 ✓'; copyBtn.classList.add('copied');
-        setTimeout(function () { copyBtn.textContent = '⧉ 复制'; copyBtn.classList.remove('copied'); }, 2000);
+        copyBtn.querySelector('span').textContent = '已复制 ✓'; copyBtn.classList.add('copied');
+        setTimeout(function () { copyBtn.querySelector('span').textContent = '复制'; copyBtn.classList.remove('copied'); }, 2000);
       }).catch(function () {
-        copyBtn.textContent = '复制失败'; copyBtn.classList.add('copied');
-        setTimeout(function () { copyBtn.textContent = '⧉ 复制'; copyBtn.classList.remove('copied'); }, 2000);
+        copyBtn.querySelector('span').textContent = '复制失败'; copyBtn.classList.add('copied');
+        setTimeout(function () { copyBtn.querySelector('span').textContent = '复制'; copyBtn.classList.remove('copied'); }, 2000);
       });
     });
     if (next) {
@@ -281,6 +282,8 @@
     }
     setMode('pkg');
   })();
+
+  var CPY_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
 
   function copyText(txt) {
     if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(txt);
@@ -316,7 +319,7 @@
     navTabs.forEach(function (t) { t.classList.toggle('active', t.dataset.tab === tab); });
     /* 隐藏容器里的 .reveal 不会被 IntersectionObserver 触发，切换后需重新挂载 */
     var cur = VIEWS[tab];
-    if (cur) cur.querySelectorAll('.reveal:not(.visible)').forEach(function (el) { revealIO.observe(el); });
+    if (cur && revealIO) cur.querySelectorAll('.reveal:not(.visible)').forEach(function (el) { revealIO.observe(el); });
 
     /* Fix #4: 切走 home 时停止演示定时器，避免隐藏视图空转 */
     if (tab !== 'home') {
@@ -336,6 +339,20 @@
   navTabs.forEach(function (t) { t.addEventListener('click', function () { go(t.dataset.tab); }); });
   document.querySelectorAll('[data-goto]').forEach(function (b) {
     b.addEventListener('click', function (e) { e.preventDefault(); go(b.dataset.goto); });
+  });
+
+  /* Fix #12: 页内锚点统一走 JS 平滑滚动（避免原生跳转 + hashchange 双滚动、hero 演示重播） */
+  document.addEventListener('click', function (e) {
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest('a[href^="#"]');
+    if (!a || a.dataset.goto) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if (!id || id.charAt(0) === '/') return;
+    var t = document.getElementById(id);
+    if (!t) return;
+    e.preventDefault();
+    history.replaceState(null, '', '#' + id);
+    t.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
   window.addEventListener('hashchange', function () {
     render(fromHash());
@@ -376,8 +393,10 @@
       '<h3>' + s.name + ' <span class="s-code" style="font-family:var(--mono);font-size:12px;color:var(--faint);background:var(--alt);border:1px solid var(--line);padding:1px 6px;border-radius:5px">' + s.code + '</span><span class="st ' + s.st + '">' + s.stt + '</span></h3>' +
       '<div class="dd">' + s.desc + '</div>' +
       '<div class="dv-h">核心能力</div><ul>' + s.uses.map(function (u) { return '<li>' + u + '</li>'; }).join('') + '</ul>' +
-      '<div class="dv-h">示例问题</div><div class="ask">' + s.ex + '</div>' +
-      '<div class="mcmd"><div class="mcmd-h"><span class="lang">bash</span><button class="copy" data-copy>⧉ 复制</button></div><div class="cmd">' + s.cmd + '</div></div>';
+      '<div class="dv-h">示例问题</div><div class="ask"><span>' + s.ex + '</span><button class="copy" data-copy="' + s.ex.replace(/"/g, '&quot;') + '">' + CPY_ICON + '<span>复制</span></button></div>' +
+      (s.st === 'dev'
+        ? '<div class="dv-h">安装状态</div><div class="mcmd soon"><div class="cmd">开发中，暂不提供安装。正式上线后将自动并入整合版，无需重新安装。</div></div>'
+        : '<div class="mcmd"><div class="mcmd-h"><span class="lang">bash</span><button class="copy" data-copy>' + CPY_ICON + '<span>复制</span></button></div><div class="cmd">' + s.cmd + '</div></div>');
     ov.classList.add('open');
     ov.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -396,13 +415,13 @@
       if (e.target.closest('.dv-x')) return closeSkill();
       var c = e.target.closest('[data-copy]');
       if (c && !c.classList.contains('copied')) {
-        var txt = c.closest('.mcmd').querySelector('.cmd').textContent;
+        var txt = c.getAttribute('data-copy') || c.closest('.mcmd').querySelector('.cmd').textContent;
         copyText(txt).then(function () {
-          c.textContent = '已复制 ✓'; c.classList.add('copied');
-          setTimeout(function () { c.textContent = '⧉ 复制'; c.classList.remove('copied'); }, 2000);
+          c.querySelector('span').textContent = '已复制 ✓'; c.classList.add('copied');
+          setTimeout(function () { c.querySelector('span').textContent = '复制'; c.classList.remove('copied'); }, 2000);
         }).catch(function () {
-          c.textContent = '复制失败'; c.classList.add('copied');
-          setTimeout(function () { c.textContent = '⧉ 复制'; c.classList.remove('copied'); }, 2000);
+          c.querySelector('span').textContent = '复制失败'; c.classList.add('copied');
+          setTimeout(function () { c.querySelector('span').textContent = '复制'; c.classList.remove('copied'); }, 2000);
         });
       }
     });
@@ -550,12 +569,12 @@
     qC.addEventListener('click', function () {
       var txt = qCmd.textContent;
       var done = function () {
-        qC.textContent = '已复制 ✓'; qC.classList.add('copied');
-        setTimeout(function () { qC.textContent = '⧉ 复制'; qC.classList.remove('copied'); }, 2000);
+        qC.querySelector('span').textContent = '已复制 ✓'; qC.classList.add('copied');
+        setTimeout(function () { qC.querySelector('span').textContent = '复制'; qC.classList.remove('copied'); }, 2000);
       };
       var fail = function () {
-        qC.textContent = '复制失败'; qC.classList.add('copied');
-        setTimeout(function () { qC.textContent = '⧉ 复制'; qC.classList.remove('copied'); }, 2000);
+        qC.querySelector('span').textContent = '复制失败'; qC.classList.add('copied');
+        setTimeout(function () { qC.querySelector('span').textContent = '复制'; qC.classList.remove('copied'); }, 2000);
       };
       copyText(txt).then(done).catch(fail);
     });
@@ -592,17 +611,17 @@
 
     function renderList(active, role) {
       rolesList.innerHTML = role.tips.map(function (t) {
-        return '<div class="role-qrow"><pre class="role-q">' + t + '</pre><button class="role-copy" data-copy="' + t.replace(/"/g, '&quot;') + '">⧉ 复制</button></div>';
+        return '<div class="role-qrow"><pre class="role-q">' + t + '</pre><button class="role-copy" data-copy="' + t.replace(/"/g, '&quot;') + '">' + CPY_ICON + '<span>复制</span></button></div>';
       }).join('');
       rolesPLabel.textContent = active.getAttribute('data-name') + ' · 常用问法';
       rolesList.querySelectorAll('.role-copy').forEach(function (b) {
         b.addEventListener('click', function () {
           copyText(b.getAttribute('data-copy')).then(function () {
-            b.textContent = '已复制 ✓'; b.classList.add('copied');
-            setTimeout(function () { b.textContent = '⧉ 复制'; b.classList.remove('copied'); }, 2000);
+            b.querySelector('span').textContent = '已复制 ✓'; b.classList.add('copied');
+            setTimeout(function () { b.querySelector('span').textContent = '复制'; b.classList.remove('copied'); }, 2000);
           }).catch(function () {
-            b.textContent = '复制失败'; b.classList.add('copied');
-            setTimeout(function () { b.textContent = '⧉ 复制'; b.classList.remove('copied'); }, 2000);
+            b.querySelector('span').textContent = '复制失败'; b.classList.add('copied');
+            setTimeout(function () { b.querySelector('span').textContent = '复制'; b.classList.remove('copied'); }, 2000);
           });
         });
       });
@@ -773,9 +792,8 @@
       var t = document.getElementById(secId);
       if (!t) return;
       var y;
-      if (secId === 'provenance') {
-        /* 出品团队：让 section 中心对齐视口中心，目录(50%)与之平行 */
-        /* 用 offsetTop（原始值，不受 zoom 影响）+ offsetHeight/2 算 section 中心 */
+      if (secId === 'tech') {
+        /* 机制保障：让 section 中心对齐视口中心，目录(50%)与之平行 */
         var tOff = t.offsetTop;
         for (var p = t.offsetParent; p && p !== document.body; p = p.offsetParent) tOff += p.offsetTop;
         y = tOff + t.offsetHeight / 2 - (window.innerHeight / 2) / (parseFloat(root.style.zoom) || 1);

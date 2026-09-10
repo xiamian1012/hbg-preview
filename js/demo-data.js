@@ -31,14 +31,14 @@ const SKILLS = {
     name: '渠道', code: 'hbg-channel', st: 'dev', stt: '开发中', en: 'HBG · 渠道',
     desc: '使用渠道特定组织架构（渠道-大区-高经-渠经-主城-城市），可一路拆分；面向渠道业务的数据接入与统一查询，补齐直销/公司后的「渠道侧」视图，开发中。',
     uses: ['渠道业绩 / 渠道拓展专题', '渠道数据源统一接入（规划中）', '与直销、公司同一条查询链路'],
-    ex: '「我想看渠道业务这个月的数据」',
+    ex: '「分析下xx大区的今年的业绩完成情况」',
     cmd: 'curl -fsSL https://raw.githubusercontent.com/58hbg/wenshu-hbg/main/skills/install.sh | bash -s -- channel'
   },
   mdc: {
     name: 'MDC', code: 'hbg-mdc', st: 'inner', stt: '内部平台', en: 'HBG · 语义查询',
     desc: '覆盖 180+ API（直销/渠道/代理/经纪/爱房/巧房/HBG），自然语言查询业绩、端口、续费、透支、商圈等 MDC 看板，与 HBG 数据源同一链路。',
     uses: ['语义查询 MDC 平台业务数据', '统一口径路由与过滤', '与 HBG 数据源链路衔接复用'],
-    ex: '「调取 MDC 平台近 30 天关键业务数据」',
+    ex: '「调取mdc的业绩和达成率数据」',
     cmd: 'curl -fsSL https://raw.githubusercontent.com/58hbg/wenshu-hbg/main/skills/install.sh | bash -s -- mdc'
   },
   max: {
@@ -52,7 +52,7 @@ const SKILLS = {
     name: '星火', code: 'hbg-xinghuo', st: 'on', stt: '已上线', en: 'HBG · 报表直查',
     desc: '直连星火平台，按报表/日期/筛选器查询有权限的报表数据，支持自然语言取数、下载原始数据并归并到工作区供二次分析与可视化。',
     uses: ['查询星火有权限的报表数据', '按需下载数据文件', '对下载数据二次分析与可视化'],
-    ex: '「查询星火平台上我有权限的月度报表并下载分析」',
+    ex: '「查询下星火报表《会员日报》，报表id=9999的数据」',
     cmd: 'curl -fsSL https://raw.githubusercontent.com/58hbg/wenshu-hbg/main/skills/install.sh | bash -s -- xinghuo'
   }
 };

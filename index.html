@@ -40,7 +40,6 @@
       <li data-goto-sec="interact"><button type="button">交互演示<i class="dir-bar"></i></button></li>
       <li data-goto-sec="boundary"><button type="button">信任边界<i class="dir-bar"></i></button></li>
       <li data-goto-sec="tech"><button type="button">机制保障<i class="dir-bar"></i></button></li>
-      <li data-goto-sec="provenance"><button type="button">出品团队<i class="dir-bar"></i></button></li>
     </ul>
   </nav>
   <button class="to-top" id="toTop" type="button" aria-label="返回顶部">
@@ -56,19 +55,33 @@
       <h1 class="h1"><span class="line">连接数据平台</span><span class="line l2">遍览<em>HBG</em>业务</span></h1>
       <p class="sub">不用切平台、不用记口径、不用写 SQL——像聊天一样就能获取数据。<br><span class="pivot">智能看板</span> / <span class="pivot">MDC</span> / <span class="pivot">MAX</span> / <span class="pivot">星火</span>多源整合，自动产出分析、HTML 报告并可直达美事</p>
       <div class="cta-row">
-        <a href="#map" class="btn btn-primary">看看它能查什么</a>
-        <a href="#start" class="btn btn-outline">快速接入</a>
+        <a href="#start" class="btn btn-primary">快速安装 · 马上开问</a>
+        <a href="#map" class="btn btn-outline">看看它能查什么</a>
         <a class="link-arrow" href="#interact">交互场景 →</a>
       </div>
-      <div class="trust">
-        <span class="it">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a5 5 0 0 0-5 5v4H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 9V7a3 3 0 0 1 6 0v4H9z"/></svg>
-          内网 SSO 安全登录
-        </span>
-        <span class="it">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          行级数据权限隔离
-        </span>
+      <div class="hero-extra">
+        <div class="trust">
+          <span class="it">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a5 5 0 0 0-5 5v4H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 9V7a3 3 0 0 1 6 0v4H9z"/></svg>
+            内网 SSO 安全登录
+          </span>
+          <span class="it">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            行级数据权限隔离
+          </span>
+          <span class="it">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            官方指标库口径
+          </span>
+          <span class="it">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M11 3a1 1 0 0 1 2 0v7.6l2.3-2.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4l2.3 2.3z"/><path d="M4 18a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1z"/></svg>
+            结果可导出复核
+          </span>
+        </div>
+        <div class="hero-qr">
+          <img src="image/feedback-qr.png" alt="美事扫码入群反馈" loading="lazy">
+          <span>美事扫码入群<br>反馈问题与建议</span>
+        </div>
       </div>
     </div>
 
@@ -162,7 +175,7 @@
         <h3 class="q-title">安装全部 DataHub Skills</h3>
         <p class="q-sub">复制下面的内容，发送给你正在使用的 Agent。</p>
         <div class="q-code">
-          <div class="q-code-h"><span class="lang">prompt</span><button class="q-copy" id="qCopy">⧉ 复制</button></div>
+          <div class="q-code-h"><span class="lang">prompt</span><button class="q-copy" id="qCopy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><span>复制</span></button></div>
           <pre class="q-cmd" id="qCmd">请直接执行下面的官方安装命令，完成 HBG Skills 的下载与安装：&#10;curl -fsSL https://raw.githubusercontent.com/58hbg/wenshu-hbg/main/skills/install.sh | bash</pre>
         </div>
       </div>
@@ -232,6 +245,8 @@
       <h2 class="sec-h2">一个入口，连接所有数据源</h2>
       <p class="sec-sub">无论数据来自哪套系统，都用同一种方式提问。HBG DataHub 帮你路由到正确的数据源并返回结构化结果。</p>
     </div>
+
+    <div class="map-note reveal" style="margin:-24px 0 26px">数据为 <b>T+1</b> 更新：当日可查截至前一日的数据，多数平台<b>每日 9:00 前</b>更新完毕</div>
 
     <div class="map-grid">
       <div class="mcard reveal" data-skill="direct">
@@ -382,29 +397,6 @@
   </div>
 </section>
 
-<!-- Provenance · 出品方 -->
-<section id="provenance">
-  <div class="wrap">
-    <div class="sec-head reveal" style="max-width:none;text-align:center;margin-left:auto;margin-right:auto">
-      <div class="eyebrow">PROVENANCE</div>
-      <h2 class="sec-h2">HBG 数据应用部出品</h2>
-      <p class="sec-sub" style="margin-left:auto;margin-right:auto">面向 58 同城内部业务团队，把分散在各个系统里的数据收敛成一个入口。</p>
-    </div>
-    <div class="uses reveal">
-      <div class="logos">
-        <span>智能看板</span>
-        <span>MDC</span>
-        <span>MAX</span>
-        <span>星火</span>
-      </div>
-      <div class="lbl">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s-7-5.6-7-11a7 7 0 1114 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="3" fill="#fff"/></svg>
-        仅限 58 内部账号使用 · 需 Passport 登录
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- Closing -->
 <section class="closing reveal">
   <div class="wrap">
@@ -444,7 +436,7 @@
             <p class="bsk-expl" id="bskSub"></p>
           </div>
           <div class="bsk-code">
-            <div class="bsk-code-h"><span class="lang">bash</span><button class="cpy" id="bskCopy">⧉ 复制</button></div>
+            <div class="bsk-code-h"><span class="lang">bash</span><button class="cpy" id="bskCopy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><span>复制</span></button></div>
             <pre id="bskCmd"></pre>
           </div>
         </div>
@@ -552,7 +544,7 @@
 
         <details class="fq reveal">
           <summary>查到空数据 / 显示「未更新」？<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
-          <div class="ans">底层看板数据一般<b>每天 9 点后</b>才会更新。9 点之前查询可能拿到空数据或提示未更新，<b>9 点之后再查一次</b>即可。</div>
+          <div class="ans">数据为 <b>T+1 更新</b>，当日只能看到前一天的数据。多数平台<b>每日 9:00 前</b>更新完毕，9 点后查询即为最新；9 点前查询可能提示未更新，<b>9 点后再查一次</b>即可。</div>
         </details>
 
         <details class="fq reveal">
@@ -702,6 +694,21 @@
 
         <div class="cl-item reveal">
           <div class="cl-meta">
+            <span class="cl-date">2026-07-19</span>
+            <span class="cl-ver">hbg-direct</span>
+          </div>
+          <div class="cl-body">
+            <div class="cl-prod">可以「只要数据」</div>
+            <ul>
+              <li>明确说「只要 excel / 只要数据 / 不用分析 / 不要报告」，就直接交付数据表、跳过报告；不说则默认生成报告。</li>
+              <li>「跳过报告」用固定关键词精确匹配、不做语义联想，避免同一句话今天跳、明天不跳。</li>
+              <li>分析脚本禁止凭空编数字：某处数据读不出来时明确停下来告诉你，而不是 AI 自己编一个凑数。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cl-item reveal">
+          <div class="cl-meta">
             <span class="cl-date">2026-07-17 ~ 07-18</span>
             <span class="cl-ver">hbg-direct</span>
           </div>
@@ -715,21 +722,6 @@
               <li>环境与规则只认一份权威配置，杜绝多套配置互相打架导致的取数失败。</li>
               <li>报告脚本的导入、样式、数据加载等框架部分由系统预写好，AI 只负责填正文图表、不能动框架，杜绝把报告脚本写崩。</li>
               <li>路径与环境问题彻底根治：Windows 路径不会误解析成 Unix 路径，文档路径随工具自动对齐，不用手动改。</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="cl-item reveal">
-          <div class="cl-meta">
-            <span class="cl-date">2026-07-19</span>
-            <span class="cl-ver">hbg-direct</span>
-          </div>
-          <div class="cl-body">
-            <div class="cl-prod">可以「只要数据」</div>
-            <ul>
-              <li>明确说「只要 excel / 只要数据 / 不用分析 / 不要报告」，就直接交付数据表、跳过报告；不说则默认生成报告。</li>
-              <li>「跳过报告」用固定关键词精确匹配、不做语义联想，避免同一句话今天跳、明天不跳。</li>
-              <li>分析脚本禁止凭空编数字：某处数据读不出来时明确停下来告诉你，而不是 AI 自己编一个凑数。</li>
             </ul>
           </div>
         </div>
@@ -802,6 +794,7 @@
       <div>
         <div class="foot-brand"><svg class="logo" width="28" height="28" viewBox="0 0 30 30" fill="none" aria-hidden="true"><path d="M15 2.5 26 8.5v13L15 27.5 4 21.5v-13z" fill="#2563eb"/><path d="M15 15V8M15 15v7M15 15H8M15 15h7" stroke="#fff" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/><circle cx="15" cy="15" r="3" fill="#fff"/><circle cx="15" cy="8" r="1.5" fill="#fff"/><circle cx="15" cy="22" r="1.5" fill="#fff"/><circle cx="8" cy="15" r="1.5" fill="#fff"/><circle cx="22" cy="15" r="1.5" fill="#fff"/></svg><span>HBG DataHub</span></div>
         <p class="foot-intro">面向HBG的一体化数据查询平台， 自然语言查询全域数据</p>
+        <p class="foot-owner"><b>HBG 数据应用部出品</b><br>仅限 58 内部账号使用 · 需 Passport 登录</p>
       </div>
       <div class="foot-col">
         <h4>数据源</h4>
@@ -826,15 +819,16 @@
       <div class="foot-col">
         <h4>联系</h4>
         <ul>
-          <li>HBG 数据应用部</li>
-          <li>liwenrui@58.com</li>
-          <li>仅限 58 内部使用</li>
+          <li class="foot-qr">
+            <span>美事扫码入群<br>反馈问题与建议</span>
+            <img src="image/feedback-qr.png" alt="美事扫码入群反馈" loading="lazy">
+          </li>
         </ul>
       </div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 58 同城 · HBG DataHub · 仅供内部使用</span>
-      <span>v1.4.4 · 内测中</span>
+      <span>v1.4.5 · 内测中</span>
     </div>
   </div>
 </footer>
