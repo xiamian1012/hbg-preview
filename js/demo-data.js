@@ -15,14 +15,14 @@ const INSTALL_SKILLS = [
 const SKILLS = {
   direct: {
     name: '直销', code: 'hbg-direct', st: 'on', stt: '已上线', en: 'HBG · 城市级直销',
-    desc: '基于智能看板底层数据，345 指标/13 业务专题自然语言查询，覆盖二租商业务，支持组织架构多层级下钻，从城市一路拆到销售。',
+    desc: '基于智能看板底层数据，业务专题自然语言查询，覆盖二租商业务，支持组织架构多层级下钻，从城市一路拆到销售。',
     uses: ['房产业绩 / 达成率 / 续费率等专业口径', '全国 → 大区 → 城市 → 团队 → 部门 → 销售 逐级下钻', '资源大盘、流量线索、竞争格局专题', '自动归因定位业绩缺口到具体群体'],
-    ex: '「查上海链家本月直销业绩和 3 个月达成率的缺口」',
+    ex: '「分析下上海今年的业绩数据，达成情况」',
     cmd: 'curl -fsSL https://raw.githubusercontent.com/58hbg/wenshu-hbg/main/skills/install.sh | bash -s -- direct'
   },
   company: {
     name: '公司', code: 'hbg-company', st: 'on', stt: '已上线', en: 'HBG · 公司级',
-    desc: '全量经纪公司数据，110 公司级指标，覆盖业绩/会员/连接/资源/套餐/增值等 12 类专题，支持跨公司横向对比与榜单，可与直销联动分析，为客户定制分析报告。',
+    desc: '全量经纪公司数据，公司级指标覆盖业绩/会员/连接/资源/套餐/增值等业务专题，支持跨公司横向对比与榜单，可与直销联动分析，为客户定制分析报告。',
     uses: ['公司业绩 / 新签拉回 / 现金流 / 房源生态', '跨公司横向对比与 Top / Bottom 榜单', '公司为最细粒度，crm_company_id 维度', '与直销城市口径联动分析'],
     ex: '「对比上海 3 家经纪公司本月的业绩结构」',
     cmd: 'curl -fsSL https://raw.githubusercontent.com/58hbg/wenshu-hbg/main/skills/install.sh | bash -s -- company'
@@ -45,7 +45,7 @@ const SKILLS = {
     name: 'MAX', code: 'hbg-max', st: 'inner', stt: '内部平台', en: 'HBG · 数据保存',
     desc: 'MAX 明细报表查询与导出：按报表/日期/筛选器灵活查询，异步导出大文件，保存到工作区供分析复用。',
     uses: ['按需拉取 MAX 平台数据文件', '统一保存到工作区', '供后续分析 / 报告复用'],
-    ex: '「下载 MAX 明细报表并保存」',
+    ex: '「下载 MAX 《全网通经纪人明细》报表id=3870,城市=上海，最新的数据并保存到工作区」',
     cmd: 'curl -fsSL https://raw.githubusercontent.com/58hbg/wenshu-hbg/main/skills/install.sh | bash -s -- max'
   },
   xinghuo: {
@@ -60,7 +60,7 @@ const SKILLS = {
 const DEMO = {
   ask: `<div class="msg me"><div class="bub">分析下云州市 26 年每个月的业绩数据</div></div>
         <div class="msg ai"><div class="av ai">AI</div><div class="bub">
-          <div class="nl">已路由 hbg-direct · 城市级直销数据（chart 541639 · level=2）</div>
+          <div class="nl">已路由 hbg-direct · 城市级直销数据源，按你的权限范围取数</div>
           <div class="ln">意图解析 <span class="ind">城市=云州</span> <span class="ind">粒度=月度</span> <span class="ind">年份=2026</span> ✓</div>
           <div class="ln">指标匹配 <span class="ind">房产业绩</span> ✓ · 语义取数 · 8 期数据<span class="db"><i></i></span></div>
           <div class="dbox">
@@ -316,7 +316,7 @@ const DEMO = {
         </div></div>`,
   xa: `<div class="msg me"><div class="bub">看下目前的云州的业绩和会员数据</div></div>
         <div class="msg ai"><div class="av ai">AI</div><div class="bub">
-          <div class="nl">已路由 hbg-direct · 直销数据源（城市级直销 · chart 541639）</div>
+          <div class="nl">已路由 hbg-direct · 城市级直销数据源，按你的权限范围取数</div>
           <div class="dbox">
             <div class="dh">云州市 · 业绩与会员概览</div>
             <table>

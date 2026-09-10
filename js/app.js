@@ -252,11 +252,11 @@
       bskTabs.forEach(function (t) { t.classList.toggle('active', t.dataset.m === m); });
       if (mode === 'pkg') {
         title.textContent = '一个整合技能，装完全部能力';
-        sub.textContent = '将 6 个数据入口封装为单一的 HBG DataHub 整合技能，默认安装命令一键完成，无需关心内部结构。';
+        sub.textContent = '将各个数据入口封装为单一的 HBG DataHub 整合技能，默认安装命令一键完成，无需关心内部结构。';
         feat.style.display = ''; optsBox.style.display = 'none';
       } else {
         title.textContent = '独立安装 Skills';
-        sub.textContent = '默认勾选全部 6 个数据能力；取消勾选即按需安装，命令会自动拼接所选 Skills 的 ID。';
+        sub.textContent = '默认勾选全部已就绪的数据能力；取消勾选即按需安装，命令会自动拼接所选 Skills 的 ID。';
         feat.style.display = 'none'; optsBox.style.display = '';
       }
       updCmd();
@@ -559,6 +559,70 @@
       };
       copyText(txt).then(done).catch(fail);
     });
+  }
+
+  /* 角色 × 典型问法（左侧角色导航 + 右侧问法列表） */
+  var ROLES = [
+    { id: 'manager', name: '业务主管', note: '城市经理/部门主管',
+      tips: [
+        '帮我看下XX城市/XX部门本月业绩、达成率，以及3个月趋势和缺口归因',
+        '对比我负责的几个城市/几个部门/团队的业务数据，提出对应的业务建议',
+        '查各团队本月会员新续完成情况/业绩完成情况，列出冲刺缺口'
+      ] },
+    { id: 'operator', name: '业务运营', note: '大区运营/城市运营',
+      tips: [
+        '查询下XX城市的业务数据，制作一份城市日报html,并在线化',
+        '下载max报表，报表 id=xxxx,限定日期=xxxxxx,城市=xxxxxx,保存到工作区文件夹内',
+        '分析下XX城市的业绩数据/会员数据，可以拆分到公司数据，定位到公司'
+      ] },
+    { id: 'client', name: '服务大客户', note: '客户运营/销售',
+      tips: [
+        '给XX公司做一份本月数据报告，涉及到业绩/会员/连接数据',
+        '对比几家大客户的业绩、套餐、会员数据，给出行动建议',
+        '查看下XX公司下经纪人的连接数据'
+      ] }
+  ];
+
+  var rolesWrap = document.getElementById('rolesPanel');
+  if (rolesWrap) {
+    var rolesNav = document.getElementById('rolesNav');
+    var rolesList = document.getElementById('rolesList');
+    var rolesPLabel = document.getElementById('rolesPLabel');
+    var curRole = 0;
+
+    function renderList(active, role) {
+      rolesList.innerHTML = role.tips.map(function (t) {
+        return '<div class="role-qrow"><pre class="role-q">' + t + '</pre><button class="role-copy" data-copy="' + t.replace(/"/g, '&quot;') + '">⧉ 复制</button></div>';
+      }).join('');
+      rolesPLabel.textContent = active.getAttribute('data-name') + ' · 常用问法';
+      rolesList.querySelectorAll('.role-copy').forEach(function (b) {
+        b.addEventListener('click', function () {
+          copyText(b.getAttribute('data-copy')).then(function () {
+            b.textContent = '已复制 ✓'; b.classList.add('copied');
+            setTimeout(function () { b.textContent = '⧉ 复制'; b.classList.remove('copied'); }, 2000);
+          }).catch(function () {
+            b.textContent = '复制失败'; b.classList.add('copied');
+            setTimeout(function () { b.textContent = '⧉ 复制'; b.classList.remove('copied'); }, 2000);
+          });
+        });
+      });
+    }
+
+    rolesNav.innerHTML = ROLES.map(function (r, i) {
+      return '<button type="button" class="role-btn' + (i === 0 ? ' active' : '') + '" data-idx="' + i + '" data-name="' + r.name + '">' +
+        '<span class="role-bt">' + r.name + '</span><span class="role-bs">' + r.note + '</span></button>';
+    }).join('');
+
+    rolesNav.querySelectorAll('.role-btn').forEach(function (b) {
+      b.addEventListener('click', function () {
+        rolesNav.querySelectorAll('.role-btn').forEach(function (x) { x.classList.remove('active'); });
+        b.classList.add('active');
+        curRole = parseInt(b.getAttribute('data-idx'), 10);
+        renderList(b, ROLES[curRole]);
+      });
+    });
+
+    renderList(rolesNav.querySelector('.role-btn'), ROLES[curRole]);
   }
 
   /* ============================================================
