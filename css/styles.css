@@ -462,13 +462,13 @@ footer{background:#080e1a;border-top:1px solid #16203a;padding:52px 0 22px;font-
 .bsk-feat .rt{justify-content:flex-start;flex-wrap:wrap;font-size:12px;color:#8297af}
 .bsk-feat .rt b{color:#526d8b;font-weight:600;margin-left:4px}
 .bsk-feat .rt b.ok{color:#0a9d6d;font-weight:700}
-.bsk-paths{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:24px 30px 26px;border-top:1px solid #eef2f7}
+.bsk-paths{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:24px 30px 26px;border-top:1px solid #eef2f7}
 @container (max-width:820px){.bsk-paths{grid-template-columns:repeat(2,1fr)}}
 @container (max-width:520px){.bsk-paths{grid-template-columns:1fr}}
-.bsk-path{background:#f5f8fc;border-radius:7px;padding:13px}
-.bsk-path strong{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:15px;font-weight:700;color:#0f1c2e;margin-bottom:6px}
+.bsk-path{background:#f5f8fc;border-radius:7px;padding:13px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.bsk-path strong{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:700;color:#0f1c2e;white-space:nowrap}
 .bsk-path strong .badge{font-size:10px;padding:2px 7px;white-space:nowrap}
-.bsk-path code{font-family:var(--mono);font-size:12px;color:#526d8b}
+.bsk-path code{font-family:var(--mono);font-size:12px;color:#526d8b;white-space:nowrap}
 .bsk-next{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:#102541;padding:16px 30px}
 .bsk-next span{color:#99aabd;font-size:13px}
 .bsk-next button{display:flex;align-items:center;gap:5px;border:none;background:transparent;color:#70aaff;font-size:13px;cursor:pointer;font-family:var(--font)}
